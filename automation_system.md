@@ -658,6 +658,157 @@ Humidity Sensor (UI03) → PID Controller → Relay Output (UO05) → Fog Pump P
 - Ensure airtight seal with foil tape or mastic
 - Position after fan (exhaust) or before fan (supply) for best effect
 
+#### Fresh Air Intake Filtration
+
+Prevents contamination from outside air entering the pre-conditioning room.
+
+| Specification | Requirement |
+|---------------|-------------|
+| Filter stages | 3-stage (mesh + G4 + F7) |
+| Insect mesh | Stainless steel, removable |
+| Pre-filter | G4 pleated panel (>10um) |
+| Fine filter | F7 pocket/bag (>1um, 80-90% mold spores) |
+| Housing | Galvanized or plastic, accessible for changes |
+
+**Filter Path:**
+```
+Outside Air -> [Insect Mesh] -> [G4 Pre-filter] -> [F7 Fine Filter] -> Pre-con Room
+                  Clean            Replace            Replace
+                  monthly          3-6 months         6-12 months
+```
+
+**Why F7 not HEPA?**
+- HEPA creates excessive pressure drop for EC fans
+- F7 captures 80-90% of mold spores (sufficient for mushroom cultivation)
+- Lower cost, easier to source replacements
+
+**Australian Suppliers:**
+- [Camfil Australia](https://www.camfil.com/en-au/) - Commercial air filters
+- [FilterFab](https://www.filterfab.com.au/) - Filter housings and media
+- [Air Filter Factory](https://www.airfilterfactory.com.au/) - G4/F7 filters
+
+#### Water Supply System
+
+Auto-fill reservoir for the high-pressure fog system.
+
+**Water Path:**
+```
+Mains -> [Isolation Valve] -> [Float Valve] -> [100L Tank] -> [5um Filter] -> [UV] -> Fog Pump
+               |                    |               |
+          Manual shutoff       Auto-fill      Food-grade
+                               maintains      polyethylene
+                               level
+```
+
+| Component | Specification |
+|-----------|---------------|
+| Tank | 100L food-grade polyethylene |
+| Float valve | 1/2" brass, adjustable |
+| Isolation valve | 1/2" ball valve |
+| Overflow | 25mm fitting to floor drain |
+| Level indicator | Visual sight tube or clear tank |
+
+**Why a tank (not direct from mains)?**
+- Buffers pressure fluctuations
+- UV sterilizer needs consistent flow rate
+- Visual confirmation of water level
+- Easy to add treatment chemicals if needed
+
+**Australian Suppliers:**
+- [Bunnings](https://www.bunnings.com.au/) - Tanks, valves, fittings
+- [Irrigation Warehouse](https://www.irrigationwarehouse.com.au/) - Float valves
+- [Reece Plumbing](https://www.reece.com.au/) - Commercial fittings
+
+#### Emergency Manual Overrides
+
+Backup controls if the Omni controller fails.
+
+| Override | Type | Function |
+|----------|------|----------|
+| Fan override | 3-position switch (OFF/AUTO/ON) | Force ventilation |
+| Fog override | 3-position switch (OFF/AUTO/ON) | Emergency humidity |
+| AC override | 3-position switch (OFF/AUTO/ON) | Prevent overheating |
+| Main isolator | Emergency stop (red mushroom) | Kill all systems |
+
+**Wiring Concept:**
+```
+Omni Relay ----+
+               |----[3-pos Switch]---- Load (Fan/Pump/AC)
+Manual 240V ---+    OFF/AUTO/ON
+```
+
+**Location:** Mount override panel near door entry, outside high-humidity zone, at eye level.
+
+#### Electrical Safety
+
+Requirements for high-humidity environment (AS/NZS 3000 compliance).
+
+| Requirement | Specification |
+|-------------|---------------|
+| RCD protection | 30mA on all circuits |
+| Outlets/switches | IP65 minimum (dust-tight, water jet resistant) |
+| Controller enclosure | IP65 with ventilation, mounted high |
+| Junction boxes | IP65, sealed cable glands |
+| Cable glands | IP68 rated |
+| GPO height | Minimum 1.2m from floor |
+| Labeling | All circuits clearly labeled |
+
+**Australian Standards:**
+- AS/NZS 3000 (Wiring Rules) - RCD protection required in wet areas
+- AS/NZS 3012 - Electrical installations on construction sites
+
+**Australian Suppliers:**
+- [Clipsal](https://www.clipsal.com/) - IP65 outlets and switches
+- [NHP](https://www.nhp.com.au/) - Industrial enclosures
+- [RS Components](https://au.rs-online.com/) - IP68 cable glands
+
+#### Spore Management
+
+Oyster mushroom spores are respiratory irritants and colonize damp surfaces aggressively.
+
+| Area | Management Strategy |
+|------|---------------------|
+| Exhaust duct | Smooth galvanized or PVC (easy to wipe clean) |
+| Exhaust termination | Point downward, away from intake (min 3m separation) |
+| Wall/ceiling surfaces | Wipe monthly with diluted bleach or H2O2 |
+| Between batches | Full sanitization (fog with H2O2 or Virkon) |
+| Personal protection | P2/N95 mask during heavy harvests |
+| Work clothes | Dedicated clothing, wash separately |
+
+**Sanitization Products:**
+- Hydrogen peroxide 3-6% (food-safe)
+- Virkon S (broad spectrum disinfectant)
+- Sodium hypochlorite (bleach) diluted 1:10
+
+#### Workflow Considerations
+
+Optimized for stainless steel racks on castors.
+
+| Consideration | Recommendation |
+|---------------|----------------|
+| Floor surface | Sealed, smooth concrete (no catching wheels) |
+| Door threshold | Flush or ramped entry (no lip) |
+| Turning space | Minimum 1.5m clear for rack rotation |
+| Rack spacing | 300-400mm between racks for airflow |
+| Parking positions | Mark floor with tape for consistent placement |
+| Wheel locks | Engage during fruiting cycle |
+| Cleaning access | Racks fully removable for room sanitization |
+
+**Rack Specifications:**
+
+| Spec | Requirement |
+|------|-------------|
+| Material | 304 stainless steel |
+| Shelves | 4-5 tiers, ventilated/mesh |
+| Load capacity | 150kg+ total |
+| Castors | 100mm, 2 locking |
+| Width | To fit door with 50mm clearance each side |
+
+**Australian Suppliers:**
+- [Mantova](https://www.mantova.com.au/) - Commercial kitchen racks
+- [StoreSafe](https://www.storesafe.com.au/) - Industrial shelving
+- [Vogue Australia](https://www.vogueaustralia.com.au/) - Stainless steel racks
+
 ---
 
 ## Wiring Diagram
@@ -797,6 +948,31 @@ Humidity Sensor (UI03) → PID Controller → Relay Output (UO05) → Fog Pump P
 | Cable glands, terminals | 1 lot | $100 | $100 |
 | **Subtotal** | | | **$390** |
 
+### Infrastructure & Safety
+
+| Item | Qty | Unit Price (AUD) | Total (AUD) |
+|------|-----|------------------|-------------|
+| Intake filter housing + G4/F7 | 1 | $200 | $200 |
+| Water tank 100L + float valve | 1 | $100 | $100 |
+| Overflow fitting + drain line | 1 | $30 | $30 |
+| Manual override panel (3x switches) | 1 | $150 | $150 |
+| IP65 controller enclosure | 1 | $180 | $180 |
+| IP65 outlets (x4) | 4 | $40 | $160 |
+| IP68 cable glands (pack) | 1 | $50 | $50 |
+| **Subtotal** | | | **$870** |
+
+### Backup Sensors & Spares
+
+| Item | Qty | Unit Price (AUD) | Total (AUD) |
+|------|-----|------------------|-------------|
+| Temp/RH Sensor (spare) | 1 | $300 | $300 |
+| CO2 Sensor (spare) | 1 | $400 | $400 |
+| Door Switch (spare) | 2 | $20 | $40 |
+| UV Lamp (spare) | 1 | $80 | $80 |
+| Fog nozzles (spare pack) | 1 | $50 | $50 |
+| Sediment filter cartridges (3-pack) | 1 | $30 | $30 |
+| **Subtotal** | | | **$900** |
+
 ### Total Estimated Cost
 
 | Category | Cost (AUD) |
@@ -806,9 +982,11 @@ Humidity Sensor (UI03) → PID Controller → Relay Output (UO05) → Fog Pump P
 | Actuators (fans, dampers, lights) | $1,400 |
 | Humidification System | $2,225 |
 | Wiring & Accessories | $390 |
-| **TOTAL** | **$8,885** |
-| Contingency (15%) | $1,333 |
-| **GRAND TOTAL** | **$10,218** |
+| Infrastructure & Safety | $870 |
+| Backup Sensors & Spares | $900 |
+| **TOTAL** | **$10,655** |
+| Contingency (15%) | $1,598 |
+| **GRAND TOTAL** | **$12,253** |
 
 ---
 
@@ -871,13 +1049,20 @@ Humidity Sensor (UI03) → PID Controller → Relay Output (UO05) → Fog Pump P
 | Task | Frequency |
 |------|-----------|
 | Check sensor readings vs portable meter | Weekly |
+| Check fog nozzles for clogs | Weekly |
+| Check water tank level and float valve | Weekly |
+| Clean insect mesh on intake | Monthly |
 | Clean CO2 sensor | Monthly |
-| Clean humidifier | Weekly |
 | Check door switch operation | Monthly |
 | Backup controller configuration | Monthly |
-| Calibrate CO2 sensor | Annually |
-| Replace humidity sensor element | 2-3 years |
+| Wipe walls/ceiling (spore management) | Monthly |
+| Replace G4 pre-filter | 3-6 months |
 | Check fan bearings/clean | 6 months |
+| Replace F7 fine filter | 6-12 months |
+| Replace UV lamp | 12 months |
+| Calibrate CO2 sensor | Annually |
+| Full room sanitization | Between batches |
+| Replace humidity sensor element | 2-3 years |
 
 ---
 
