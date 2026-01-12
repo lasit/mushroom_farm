@@ -27,6 +27,57 @@ Comprehensive automation design for the fruiting room climate control using the 
 - Real-time monitoring via web interface
 - Runs independently once programmed (PC not required)
 
+### Future Expansion Strategy
+
+Starting with the C20 provides a cost-effective path with multiple expansion options:
+
+**Option 1: Add Remote Expansion Modules (REM)**
+
+The Omni U10 REM adds 10 programmable points per module:
+
+| Spec | Detail |
+|------|--------|
+| Model | OMU10 |
+| Points per module | 10 programmable UI/O |
+| Max modules per C20 | 5 (adds 50 points → 70 total) |
+| Power | 8W max per module |
+| Mounting | DIN rail |
+| Programming | Via Focus software (same as controller) |
+| Estimated cost | ~$800-1,500 AUD per module |
+
+**Note:** A feature licence may be required on the C20 to enable REM support - confirm with Innotech when purchasing.
+
+**Option 2: Add Second C20 Controller**
+
+For a completely separate room (e.g., second fruiting room):
+
+- Connect via BACnet IP (Ethernet) or BACnet MS/TP (RS-485)
+- Each controller runs independently but can share data
+- Full redundancy - if one fails, the other keeps running
+- ~$3,500 AUD for additional C20
+
+**Expansion Scenarios**
+
+| Scenario | Solution | Additional Cost |
+|----------|----------|-----------------|
+| Add 4-6 sensors to existing room | 1x U10 REM | ~$1,000-1,500 |
+| Add incubation room monitoring | 1x U10 REM | ~$1,000-1,500 |
+| Add second fruiting room | 2nd C20 controller | ~$3,500 |
+| Full second room + sensors | 2nd C20 + U10 | ~$4,500-5,000 |
+
+**Why C20 over C40?**
+
+| Factor | C20 | C40 |
+|--------|-----|-----|
+| Base cost | ~$3,500 | ~$5,500 |
+| Current needs (16 points) | Yes | Yes |
+| Spare capacity | 4 points | 24 points |
+| Expandable to | 70 points (with REMs) | 90 points (with REMs) |
+| Savings | - | -$2,000 initial |
+
+The C20 meets current requirements with room to grow. The $2,000 saved can fund a U10 REM later if needed, providing better value than buying unused capacity upfront.
+
+
 ### Training Requirement
 
 Innotech requires 2-day training before purchase. This covers:
