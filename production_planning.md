@@ -325,18 +325,165 @@ With safety factor (1.5-2×):
 - Use positive pressure in pre-con room to prevent spore backflow
 - Clean/replace filters regularly
 
+### Room Pressure: Negative for Fruiting
+
+The fruiting room should maintain **slight negative pressure** to contain spores.
+
+| Pressure Type | How It Works | Best For |
+|---------------|--------------|----------|
+| **Positive** | Intake > Exhaust, air pushes OUT through gaps | Labs, inoculation rooms (keeps contaminants OUT) |
+| **Negative** | Exhaust > Intake, air is PULLED IN through gaps | Fruiting rooms (keeps spores CONTAINED) |
+
+#### Why Negative Pressure for Fruiting?
+
+Oyster mushrooms produce massive spore loads. Negative pressure ensures:
+- Spores stay contained in the fruiting room
+- Any air leaks draw filtered air IN (not spore-laden air OUT)
+- Pre-conditioning room and rest of building stay spore-free
+- No respirator needed outside the fruiting room
+
+#### Pressure Zones
+
+```
+[OUTSIDE]           [PRE-CON ROOM]         [FRUITING ROOM]
+ Ambient      →     Slight Positive    →    Slight Negative
+                    (keeps spores out)      (contains spores)
+```
+
+### Intake vs Exhaust Fan Sizing
+
+To achieve slight negative pressure:
+
+| Component | Ratio | For 150 m³/hr System |
+|-----------|-------|----------------------|
+| Intake fan | 85-90% of exhaust | ~135 m³/hr |
+| Exhaust fan | 100% (reference) | 150 m³/hr |
+| Pressure differential | -10 to -15% | Air drawn in through gaps |
+
+**Practical setup:** Use same size fans, run exhaust 10-15% faster than intake.
+
 ### Duct Sizing
 
-Air duct diameter based on maintaining 4-5 m/s airspeed:
+Air duct diameter based on maintaining 4-5 m/s airspeed.
+
+#### Formula
 
 ```
-Duct area = Airflow ÷ Air velocity
-          = 180 m³/hr ÷ 4 m/s
-          = 0.0125 m²
-          = 125mm diameter (use 150mm for lower resistance)
+Duct Area = Airflow (m³/s) ÷ Velocity (m/s)
+Diameter = √(4 × Area ÷ π)
 ```
 
-**Recommendation: 150mm insulated flexible duct**
+#### Calculation for 150 m³/hr
+
+```
+Airflow = 150 m³/hr = 0.042 m³/s
+
+At 4 m/s:
+  Area = 0.042 ÷ 4 = 0.0104 m²
+  Diameter = √(4 × 0.0104 ÷ π) = 115mm
+
+At 5 m/s:
+  Area = 0.042 ÷ 5 = 0.0083 m²
+  Diameter = √(4 × 0.0083 ÷ π) = 103mm
+```
+
+**Mathematical result: 100-125mm would work**
+
+#### Practical Recommendation
+
+| Duct | Size | Type | Reasoning |
+|------|------|------|-----------|
+| **Intake** | 150mm | Insulated flex | Oversized for lower resistance, prevents condensation |
+| **Exhaust** | 150mm | Standard flex | Same size, fan speed controls pressure |
+
+Using same duct size simplifies construction. Control pressure with fan speed, not duct size.
+
+#### Why Insulate Intake Duct?
+
+Cold air (18-20°C) passing through duct in hot Darwin ambient (35°C+) causes condensation on duct exterior. Insulated duct prevents dripping.
+
+Exhaust duct doesn't need insulation - hot humid air won't condense going outside.
+
+### Complete Ventilation Layout
+
+```
+[PRE-CONDITIONING ROOM]
+  │
+  └── Intake fan (135 m³/hr)
+         │
+         ▼
+      150mm insulated duct
+         │
+         ▼
+┌────────────────────────────────────┐
+│     FRUITING ROOM (18.12 m³)       │
+│     Slight NEGATIVE pressure       │
+│                                    │
+│  ┌─────────────────────────────┐   │
+│  │ Cold dry air enters high    │   │
+│  │         ↓                   │   │
+│  │ Humidifier adds moisture    │   │
+│  │         ↓                   │   │
+│  │ Air flows across shelves    │   │
+│  │         ↓                   │   │
+│  │ CO2/moisture accumulates    │   │
+│  │         ↓                   │   │
+│  │ Exhaust removes stale air   │   │
+│  └─────────────────────────────┘   │
+│                                    │
+└────────────────────────────────────┘
+         │
+         ▼
+      150mm standard duct
+         │
+         ▼
+  Exhaust fan (150 m³/hr)
+         │
+         ▼
+[TO OUTSIDE - hot, humid, CO2-rich, spore-laden]
+```
+
+### Fan Placement
+
+| Fan | Position | Reasoning |
+|-----|----------|-----------|
+| Intake | High on wall | Cold air falls, distribute from top |
+| Exhaust | High on opposite wall | CO2 doesn't accumulate at floor level |
+| Distance | Max 8-10m apart | Beyond this, airflow drops significantly |
+
+### Ventilation Control Options
+
+#### Option A: Variable Speed Fans (Recommended)
+
+- Both fans same capacity (~200 m³/hr)
+- Intake runs at 70-80% speed
+- Exhaust runs at 80-90% speed
+- CO2 sensor triggers increased exhaust when >1000ppm
+- Most flexible, best control
+
+#### Option B: Fixed Speed with Dampers
+
+- Fixed speed fans
+- Damper on intake restricts flow
+- Exhaust runs unrestricted
+- Simpler but less responsive
+
+#### Option C: Passive Intake
+
+- No intake fan - just filtered opening
+- Exhaust fan creates negative pressure
+- Air pulled through passive intake
+- Simplest but least control over airflow rate
+
+### Duct Resistance Adjustments
+
+Add to fan CFM requirements:
+- +5% per metre of ducting
+- +30% for each 90° bend
+- +15% for each 45° bend
+- +25% if using carbon filter
+
+**Example:** 150 m³/hr + 3m duct (+15%) + one 90° bend (+30%) = 150 × 1.45 = **218 m³/hr fan capacity needed**
 
 ## Scaling Considerations
 
