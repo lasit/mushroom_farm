@@ -658,6 +658,136 @@ Humidity Sensor (UI03) → PID Controller → Relay Output (UO05) → Fog Pump P
 - Ensure airtight seal with foil tape or mastic
 - Position after fan (exhaust) or before fan (supply) for best effect
 
+#### Air Conditioning System
+
+Inverter split system for temperature control in the pre-conditioning room. Selected for quiet operation (critical for residential setting with living space upstairs).
+
+| Specification | Requirement |
+|---------------|-------------|
+| Type | Inverter split system (variable speed) |
+| Capacity | 2.5 kW cooling/heating |
+| Indoor noise | <25 dB (quiet mode) |
+| Outdoor noise | <50 dB (critical for residential) |
+| Refrigerant | R32 (energy efficient) |
+| Control | On/off via Omni relay or WiFi |
+| Energy rating | 5-star minimum |
+
+**Recommended System: Mitsubishi Heavy Industries Avanti Plus 2.5kW**
+
+| Specification | Value |
+|---------------|-------|
+| Model | SRK25ZSXA-WF (WiFi) |
+| Indoor noise | 19 dB (quiet mode) |
+| Outdoor noise | 46-48 dB |
+| Energy rating | 5-star |
+| Warranty | 5 years parts & labour |
+| WiFi control | Yes (optional monitoring) |
+| Price (unit) | ~$1,200 AUD |
+| Installation | ~$600-800 AUD |
+
+**Why Inverter Split System?**
+- Variable speed compressor - no loud on/off cycling
+- Quietest outdoor unit in class (46-48 dB vs 55-65 dB standard)
+- Better humidity control (runs longer at lower power)
+- 30-50% more energy efficient than on/off units
+- Stable temperature (no 2-3C swings)
+
+**Alternative Options (Australia):**
+
+| Model | Indoor (dB) | Outdoor (dB) | Price | Notes |
+|-------|-------------|--------------|-------|-------|
+| MHI Avanti Plus 2.5kW | 19 | 46-48 | ~$1,200 | Quietest outdoor |
+| MHI Avanti 2.5kW | 19 | 48-50 | ~$950 | Great value |
+| Daikin Lite 2.5kW | 19 | 48-50 | ~$1,000 | Reliable |
+| Fujitsu ASTG 2.5kW | 19 | 48-50 | ~$1,000 | Good value |
+
+**Noise Reference:**
+- 19 dB = rustling leaves (virtually silent)
+- 46-48 dB = quiet library / light rain
+- 50-55 dB = normal conversation
+
+**Installation Notes:**
+- Mount outdoor unit on wall bracket at ground level
+- Position away from upstairs bedroom windows
+- Use anti-vibration mounts on outdoor unit
+- Ensure adequate airflow clearance (300mm sides, 600mm front)
+- Condensate drain to floor drain
+
+**Australian Suppliers:**
+- [Darwin Cooling](https://darwincooling.com.au/) - Local Darwin installer
+- [FastFlex](https://www.fastflex.com.au/) - MHI units wholesale
+- [Frozone Air](https://www.frozoneair.com.au/) - Supply and install
+
+**Integration with Omni C20:**
+```
+Temperature Sensor (UI02) -> PID Controller -> AC Relay Output (UO06)
+                                   |
+                            Setpoint: 18-20C
+                            Deadband: +/-1C
+                            Cooling > 21C
+                            Heating < 19C
+```
+
+#### Fog Pump External Enclosure
+
+Weatherproof housing for the Mistify fog pump, mounted externally for noise isolation.
+
+| Specification | Requirement |
+|---------------|-------------|
+| IP rating | IP65 minimum (dust-tight, water jet resistant) |
+| Size | ~400 x 300 x 200mm |
+| Material | Polycarbonate or ABS (UV resistant) |
+| Ventilation | Required - pump generates 180W heat |
+| Mounting | Wall-mountable, shaded location |
+
+**Enclosure Setup:**
+```
+                    EXTERNAL WEATHERPROOF ENCLOSURE (IP65)
+                    +-----------------------------------+
+   Water in ------->|  [Mistify Pump]  [Power relay]   |
+   (from UV)        |       |              |           |
+                    |       |         240V from Omni   |
+                    |  [Vibration isolation mounts]    |
+                    |                                  |
+   HP line out ---->|  --------------------------->    |---> To nozzles
+                    |                                  |    (up to 15m run)
+                    |  [Ventilation fan + filter]      |
+                    +-----------------------------------+
+                              |
+                        Wall mounted
+                        (shaded location, away from rain)
+```
+
+**Components:**
+
+| Item | Purpose | Est. Cost |
+|------|---------|-----------|
+| IP65 enclosure 400x300x200mm | Weatherproof housing | ~$120 |
+| Ventilation fan + filter kit | Heat dissipation | ~$60 |
+| Vibration isolation mounts | Noise reduction | ~$40 |
+| **Total** | | **~$220** |
+
+**Noise Reduction Achieved:**
+
+| Factor | Reduction |
+|--------|-----------|
+| Enclosure walls | -5 to -10 dB |
+| Vibration mounts | -3 to -5 dB |
+| External location | Distance attenuation |
+| **Result** | ~45-50 dB at enclosure, inaudible upstairs |
+
+**Installation Notes:**
+- Mount in shaded location (Darwin heat)
+- Ensure ventilation openings face down (rain protection)
+- High-pressure line can run up to 15m to nozzles
+- Route power cable through IP68 cable gland
+- Provide drip loop on all cable entries
+
+**Australian Suppliers:**
+- [PV Connections](https://pvconnections.com.au/) - IP65 enclosures
+- [RS Components](https://au.rs-online.com/) - Enclosures and fans
+- [Jaycar](https://www.jaycar.com.au/) - Ventilation fans
+
 #### Fresh Air Intake Filtration
 
 Prevents contamination from outside air entering the pre-conditioning room.
@@ -961,6 +1091,24 @@ Optimized for stainless steel racks on castors.
 | IP68 cable glands (pack) | 1 | $50 | $50 |
 | **Subtotal** | | | **$870** |
 
+### AC System
+
+| Item | Qty | Unit Price (AUD) | Total (AUD) |
+|------|-----|------------------|-------------|
+| MHI Avanti Plus 2.5kW (WiFi) | 1 | $1,200 | $1,200 |
+| Installation (wall mount, <3m pipe) | 1 | $700 | $700 |
+| Anti-vibration mounts (outdoor) | 1 | $50 | $50 |
+| **Subtotal** | | | **$1,950** |
+
+### Fog Pump Enclosure
+
+| Item | Qty | Unit Price (AUD) | Total (AUD) |
+|------|-----|------------------|-------------|
+| IP65 enclosure 400x300x200mm | 1 | $120 | $120 |
+| Ventilation fan + filter kit | 1 | $60 | $60 |
+| Vibration isolation mounts | 1 | $40 | $40 |
+| **Subtotal** | | | **$220** |
+
 ### Backup Sensors & Spares
 
 | Item | Qty | Unit Price (AUD) | Total (AUD) |
@@ -983,10 +1131,12 @@ Optimized for stainless steel racks on castors.
 | Humidification System | $2,225 |
 | Wiring & Accessories | $390 |
 | Infrastructure & Safety | $870 |
+| AC System | $1,950 |
+| Fog Pump Enclosure | $220 |
 | Backup Sensors & Spares | $900 |
-| **TOTAL** | **$10,655** |
-| Contingency (15%) | $1,598 |
-| **GRAND TOTAL** | **$12,253** |
+| **TOTAL** | **$12,825** |
+| Contingency (15%) | $1,924 |
+| **GRAND TOTAL** | **$14,749** |
 
 ---
 
@@ -1051,13 +1201,16 @@ Optimized for stainless steel racks on castors.
 | Check sensor readings vs portable meter | Weekly |
 | Check fog nozzles for clogs | Weekly |
 | Check water tank level and float valve | Weekly |
+| Check fog pump enclosure ventilation | Weekly |
 | Clean insect mesh on intake | Monthly |
 | Clean CO2 sensor | Monthly |
 | Check door switch operation | Monthly |
 | Backup controller configuration | Monthly |
 | Wipe walls/ceiling (spore management) | Monthly |
+| Clean AC filters (indoor unit) | Monthly |
 | Replace G4 pre-filter | 3-6 months |
 | Check fan bearings/clean | 6 months |
+| AC professional service | 6-12 months |
 | Replace F7 fine filter | 6-12 months |
 | Replace UV lamp | 12 months |
 | Calibrate CO2 sensor | Annually |
