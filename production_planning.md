@@ -188,6 +188,156 @@ Running both Oyster (20kg/week) and Lion's Mane (10kg/week):
 
 Space check: 75 bags in fruiting ÷ 108 capacity = **69% utilization** ✓
 
+## Climate Control & Pre-Conditioning Room
+
+### Fruiting Room Specifications
+
+| Parameter | Value |
+|-----------|-------|
+| Dimensions | 2.95m × 3.15m × 1.95m |
+| Volume | 18.12 m³ |
+| Floor area | 9.29 m² |
+
+### Environmental Requirements
+
+| Parameter | Oyster | Lion's Mane |
+|-----------|--------|-------------|
+| Temperature | 18-24°C | 18-22°C |
+| Humidity | 85-95% | 85-95% |
+| CO2 (max) | <1000 ppm | <800 ppm |
+| Air velocity | 0.1-0.3 m/s | 0.1-0.3 m/s |
+
+### Airflow Calculation
+
+Airflow is calculated based on **substrate load**, not room volume.
+
+| Method | Airflow Required |
+|--------|------------------|
+| Single-zone (all blocks fruit together) | 250-300 m³/hr per ton of substrate |
+| Mixed-age blocks | 180-220 m³/hr per ton of substrate |
+
+**For this operation:**
+- ~75 bags in fruiting at 5kg/bag = 375kg substrate
+- Airflow needed: 375kg × 0.3 m³/hr/kg = **~110 m³/hr** (65 CFM)
+
+Cross-check with air changes per hour:
+- Minimum (6 ACH): 18.12 m³ × 6 = 109 m³/hr
+- Maximum (10 ACH): 18.12 m³ × 10 = 181 m³/hr
+
+**Target airflow: 100-180 m³/hr (~60-105 CFM)**
+
+### Pre-Conditioning Room Design
+
+The pre-conditioning room provides cold, dry air to the fruiting room. The fruiting room then adds humidity (up to 95%) and exhausts CO2.
+
+#### Sizing Guidelines
+
+Pre-conditioning space is sized based on airflow, not as a simple ratio of room volume.
+
+| Approach | Size Calculation | Result |
+|----------|------------------|--------|
+| Mixing box (minimum) | 2-3× airflow per minute | 6-9 m³ |
+| Working room (25-30% of fruiting) | 18.12 × 0.25-0.30 | 4.5-5.4 m³ |
+| With equipment clearance (30-40%) | 18.12 × 0.30-0.40 | 5.4-7.2 m³ |
+
+**Recommendation: ~5-6 m³** (e.g., 1.5m × 1.5m × 2.2m)
+
+#### System Layout
+
+```
+[Outside Air 35°C]
+       ↓
+[G3/F5 Pre-filter] ─── Removes dust, prevents spore backflow
+       ↓
+[PRE-CONDITIONING ROOM]
+  ├── AC Unit (2.5-3.5kW inverter split)
+  ├── Cools air to 18-20°C
+  └── Dehumidifies (AC naturally removes moisture)
+       ↓
+[150mm Insulated Duct]
+       ↓
+[FRUITING ROOM 18.12 m³]
+  ├── Humidifier → Adds moisture to 85-95% RH
+  ├── Circulation fans → Even air distribution
+  ├── CO2 sensor → Triggers exhaust at >1000ppm
+  └── Exhaust fan → Removes CO2 and excess moisture
+       ↓
+[Exhaust to Outside]
+```
+
+### Fresh Air vs Recirculation
+
+Mixing fresh air with recirculated room air reduces cooling load.
+
+| Growth Phase | Fresh Air % | Recirculated % |
+|--------------|-------------|----------------|
+| First flush | 60-80% | 20-40% |
+| Second flush | 40-50% | 50-60% |
+
+Recirculated air is already at target temperature and humidity, reducing energy costs.
+
+### Equipment Specifications
+
+#### Pre-Conditioning Room
+
+| Component | Specification | Purpose |
+|-----------|---------------|---------|
+| AC unit | 2.5-3.5kW inverter split | Cool from 35°C → 18-20°C |
+| Pre-filter | G3 class | Remove dust from intake |
+| Supply fan | 180 m³/hr, variable speed | Deliver air to fruiting room |
+| Supply duct | 150mm insulated flex | Prevent condensation |
+| Damper | Manual or motorized | Control airflow rate |
+
+#### Fruiting Room
+
+| Component | Specification | Purpose |
+|-----------|---------------|---------|
+| Humidifier | Ultrasonic or high-pressure fog | Maintain 85-95% RH |
+| Exhaust fan | 160 m³/hr (90% of supply) | Remove CO2, maintain slight negative pressure |
+| CO2 sensor | 0-5000ppm range | Trigger ventilation |
+| Circulation fans | Low velocity | Even air distribution |
+
+### AC Sizing for Darwin Climate
+
+Cooling load calculation:
+
+```
+Cooling load = 1.08 × CFM × ΔT (°F)
+             = 1.08 × 105 CFM × 27°F (35°C to 20°C)
+             = ~3,000 BTU/hr
+
+With safety factor (1.5-2×):
+             = 5,000-6,000 BTU/hr (1.5-1.8kW)
+```
+
+**Recommendation: 2.5kW (8,500 BTU) minimum** for Darwin's extreme heat days.
+
+### Spore Protection
+
+**Critical for oyster mushrooms:** Oyster mushrooms produce massive spore loads that:
+- Clog evaporator fins
+- Seize fan motors
+- Require respirators for personnel
+
+**Solutions:**
+- Keep AC unit in separate pre-conditioning room (not in fruiting room)
+- Install G3 filter before heat exchanger
+- Use positive pressure in pre-con room to prevent spore backflow
+- Clean/replace filters regularly
+
+### Duct Sizing
+
+Air duct diameter based on maintaining 4-5 m/s airspeed:
+
+```
+Duct area = Airflow ÷ Air velocity
+          = 180 m³/hr ÷ 4 m/s
+          = 0.0125 m²
+          = 125mm diameter (use 150mm for lower resistance)
+```
+
+**Recommendation: 150mm insulated flexible duct**
+
 ## Scaling Considerations
 
 ### To increase output:
