@@ -516,28 +516,89 @@ IF Door OPEN:
 - [Controls Traders](https://www.controlstraders.com/) - Belimo actuators
 - [Control Store Australia](https://www.controlstore.com.au/) - Belimo, Siemens
 
-#### Humidifier
+#### Humidification System (High-Pressure Fogging)
+
+**Why High-Pressure Fogging over Ultrasonic?**
+
+| Factor | Ultrasonic | High-Pressure Fog |
+|--------|------------|-------------------|
+| Droplet size | 1-5 microns | 5-15 microns |
+| Wets surfaces? | Slightly | No (evaporates mid-air) |
+| Mineral dust | Bad (white film on everything) | Minimal |
+| Water quality needs | RO/distilled required | Filtered + UV |
+| Maintenance | High (weekly tank cleaning) | Low (monthly nozzle check) |
+| Bacteria risk | High (atomizes biofilm) | Low (UV sterilization) |
+| Lifespan | 1-2 years | 10+ years |
+
+High-pressure fog creates 5-15 micron droplets that evaporate before hitting surfaces - no wet walls, no contamination vectors.
 
 | Specification | Requirement |
 |---------------|-------------|
-| Type | Ultrasonic cool mist |
-| Output | 3-6 kg/hr mist |
-| Tank/feed | Auto-fill or large tank |
-| Control | On/off (relay) or 0-10V |
+| Type | High-pressure fog (40-70 bar / 600-1000 PSI) |
+| Droplet size | 5-15 microns |
+| Flow rate | 0.5-1 L/min |
+| Nozzles | 4-6 anti-drip stainless steel |
+| Control | On/off (relay to pump) |
 | Power | 240V |
+| Water treatment | 5μm filter + UV sterilization |
 
-**Recommended Products (Australia):**
+**Recommended System: Mistify M-100**
 
-| Product | Supplier | Output | Price (est) |
-|---------|----------|--------|-------------|
-| Industrial Ultrasonic 6kg/hr | Hydro Experts | 6 kg/hr | ~$400-600 |
-| Mars Hydro 6L Smart | Mars Hydro AU | 0.5 kg/hr | ~$100-150 |
+| Specification | Value |
+|---------------|-------|
+| Model | M-100 |
+| Price | $1,875 AUD |
+| Nozzles included | 20 (use 4-6 for 9m² room) |
+| Pressure | 40-70 bar |
+| Flow rate | 1 L/min |
+| Power | 180W |
+| Control | Phone app + relay trigger |
+| Noise | 55 dB |
 
-**Note:** For 0-10V control, you may need to use a relay with PWM timer, or contact industrial humidifier suppliers (Condair, Carel) for modulating units.
+**Alternative Options (Australia):**
+
+| System | Supplier | Price | Notes |
+|--------|----------|-------|-------|
+| Mistify M-050 | Mistify | $1,495 | 14 nozzles, 0.5 L/min - minimum viable |
+| Mistify M-100 | Mistify | $1,875 | 20 nozzles, recommended |
+| MistKing Advanced | Aquatic Supplies AU | ~$700 | Mid-pressure (125 PSI), smaller droplets |
+| Custom build | Various | ~$1,500 | DIY with AR pump + Irribiz nozzles |
 
 **Australian Suppliers:**
-- [Hydro Experts](https://www.hydroexperts.com.au/) - Industrial humidifiers
-- [Mars Hydro AU](https://marshydroau.com/) - Grow room humidifiers
+- [Mistify](https://mistify.com.au/) - Complete high-pressure fog systems
+- [Mistafog](https://mistafog.com.au/) - Custom commercial systems, mushroom farm experience
+- [CoolMist Systems](https://www.coolmist.com.au/) - Greenhouse fog systems
+- [Aquatic Supplies Australia](https://www.aquaticsupplies.com.au/) - MistKing systems
+
+**Water Treatment (Required):**
+
+| Component | Supplier | Price (est) |
+|-----------|----------|-------------|
+| 5μm Sediment Filter | Clarence Water Filters | ~$50 |
+| UV Sterilizer (12LPM, 240V) | Shield Water Filter | ~$250 |
+| Float valve + tank fittings | Bunnings/plumbing | ~$50 |
+
+**Australian Water Treatment Suppliers:**
+- [Clarence Water Filters](https://www.clarencewaterfilters.com.au/) - Filters and UV
+- [Shield Water Filter](https://shieldwaterfilter.com.au/) - UV sterilizers
+- [Water Filtration Solutions](https://waterfiltrationsolutions.com.au/) - Complete systems
+
+**Installation Notes:**
+- Mount nozzles on ceiling pointing down or at 45° angle toward walls
+- Space nozzles 1-1.5m apart for even coverage
+- Install UV sterilizer inline before pump inlet
+- Use 5μm filter before UV (sediment blocks UV rays)
+- Anti-drip nozzles prevent dripping when pump stops
+- Connect pump power to Omni relay output (UO05)
+
+**Integration with Omni C20:**
+```
+Humidity Sensor (UI03) → PID Controller → Relay Output (UO05) → Fog Pump Power
+                                ↓
+                         Setpoint: 90% RH
+                         Deadband: ±3%
+                         On < 87%, Off > 93%
+```
 
 #### LED Grow Lights
 
@@ -713,9 +774,18 @@ IF Door OPEN:
 | EC Fan 150mm (Supply) | 1 | $350 | $350 |
 | Backdraft Damper 150mm | 2 | $50 | $100 |
 | Damper 150mm + Actuator | 1 | $300 | $300 |
-| Humidifier (Industrial) | 1 | $500 | $500 |
 | LED Grow Light (dimmable) | 1 | $300 | $300 |
-| **Subtotal** | | | **$1,900** |
+| **Subtotal** | | | **$1,400** |
+
+### Humidification System
+
+| Item | Qty | Unit Price (AUD) | Total (AUD) |
+|------|-----|------------------|-------------|
+| Mistify M-100 Fog System | 1 | $1,875 | $1,875 |
+| 5μm Sediment Filter | 1 | $50 | $50 |
+| UV Sterilizer (12LPM, 240V) | 1 | $250 | $250 |
+| Float valve + tank fittings | 1 | $50 | $50 |
+| **Subtotal** | | | **$2,225** |
 
 ### Wiring & Accessories
 
@@ -733,11 +803,12 @@ IF Door OPEN:
 |----------|------------|
 | Controller & Infrastructure | $3,730 |
 | Sensors | $1,140 |
-| Actuators (incl. backdraft dampers) | $1,900 |
+| Actuators (fans, dampers, lights) | $1,400 |
+| Humidification System | $2,225 |
 | Wiring & Accessories | $390 |
-| **TOTAL** | **$7,160** |
-| Contingency (15%) | $1,074 |
-| **GRAND TOTAL** | **$8,234** |
+| **TOTAL** | **$8,885** |
+| Contingency (15%) | $1,333 |
+| **GRAND TOTAL** | **$10,218** |
 
 ---
 
