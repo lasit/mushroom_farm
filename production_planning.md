@@ -218,13 +218,40 @@ Airflow is calculated based on **substrate load**, not room volume.
 
 **For this operation:**
 - ~75 bags in fruiting at 5kg/bag = 375kg substrate
-- Airflow needed: 375kg × 0.3 m³/hr/kg = **~110 m³/hr** (65 CFM)
+- Peak airflow needed: 375kg × 0.3 m³/hr/kg = **~110 m³/hr** (65 CFM)
 
 Cross-check with air changes per hour:
 - Minimum (6 ACH): 18.12 m³ × 6 = 109 m³/hr
 - Maximum (10 ACH): 18.12 m³ × 10 = 181 m³/hr
 
-**Target airflow: 100-180 m³/hr (~60-105 CFM)**
+**Design capacity: 150 m³/hr** (sized for peak demand with headroom)
+
+### Demand-Based Ventilation (Actual Operation)
+
+**Key insight:** Fans don't run at full speed continuously. CO2-based demand ventilation means:
+- Fans run at **12% minimum** most of the time (backflow prevention)
+- Only ramp up when CO2 exceeds setpoint (~1000 ppm)
+- Peak ventilation is brief, not continuous
+
+#### Actual Operating Profile
+
+| Operating Mode | Fan Speed | Airflow | Time % | Trigger |
+|----------------|-----------|---------|--------|---------|
+| **Baseline** | 12% | ~25-30 m³/hr | 60-70% | Constant (backflow prevention) |
+| **Moderate CO2** | 30-50% | ~50-80 m³/hr | 20-25% | CO2 800-1000 ppm |
+| **High CO2 spike** | 70-100% | 100-150 m³/hr | 5-15% | CO2 >1000 ppm |
+
+**Weighted average airflow: ~40-55 m³/hr** (not 150 m³/hr continuously)
+
+#### Why This Works
+
+Mushroom CO2 production varies throughout the day and growth cycle:
+- **Pin formation:** Low respiration, minimal CO2
+- **Active growth:** Moderate respiration, periodic flushing needed
+- **Mature fruiting bodies:** Higher respiration, more frequent ventilation
+- **Post-harvest:** CO2 drops quickly, fans return to minimum
+
+The controller monitors CO2 continuously and responds proportionally, using only the ventilation actually needed.
 
 ### Pre-Conditioning Room Design
 
@@ -232,15 +259,38 @@ The pre-conditioning room provides cold, dry air to the fruiting room. The fruit
 
 #### Sizing Guidelines
 
-Pre-conditioning space is sized based on airflow, not as a simple ratio of room volume.
+Pre-conditioning space is sized based on airflow. With demand-based ventilation, typical airflow is much lower than design maximum.
 
-| Approach | Size Calculation | Result |
-|----------|------------------|--------|
-| Mixing box (minimum) | 2-3× airflow per minute | 6-9 m³ |
-| Working room (25-30% of fruiting) | 18.12 × 0.25-0.30 | 4.5-5.4 m³ |
-| With equipment clearance (30-40%) | 18.12 × 0.30-0.40 | 5.4-7.2 m³ |
+| Scenario | Airflow | Sizing Approach | Result |
+|----------|---------|-----------------|--------|
+| **Old assumption** (continuous) | 150 m³/hr | 2-3× per minute | 5-7.5 m³ |
+| **Demand-based typical** | 40-55 m³/hr | 2-3× per minute | 1.3-2.8 m³ |
+| **With equipment space** | - | AC + filter + clearance | +2 m³ |
 
-**Recommendation: ~5-6 m³** (e.g., 1.5m × 1.5m × 2.2m)
+#### Revised Pre-Con Room Options
+
+| Size | Dimensions | Use Case |
+|------|------------|----------|
+| **Minimum** | 2-3 m³ (1.0×1.0×2.2m) | Tight closet, just fits AC and ducting |
+| **Comfortable** | 3-4 m³ (1.2×1.5×2.2m) | Access to AC, basic storage |
+| **With workspace** | 4-5 m³ (1.5×1.5×2.2m) | Service access, supply storage |
+
+**Recommendation: 3-4 m³** is sufficient for demand-based ventilation.
+
+The larger volume also provides:
+- Better temperature buffer during Darwin's extreme heat days
+- More air dwell time = better conditioning at low flows
+- Quieter operation (lower air velocity)
+
+#### Energy Savings from Demand-Based Ventilation
+
+| Component | Continuous (old) | Demand-Based | Savings |
+|-----------|-----------------|--------------|---------|
+| Fan energy | ~25W continuous | ~5W typical | 80% |
+| AC load (ventilation) | 1.5kW average | 0.4kW average | 73% |
+| Daily fan cost | ~$0.15 | ~$0.03 | $0.12/day |
+| Daily AC cost (vent) | ~$4.30 | ~$1.15 | $3.15/day |
+| **Annual savings** | - | - | **~$1,200/year** |
 
 #### System Layout
 
@@ -352,19 +402,28 @@ Oyster mushrooms produce massive spore loads. Negative pressure ensures:
 
 ### Intake vs Exhaust Fan Sizing
 
-To achieve slight negative pressure:
+To achieve slight negative pressure with demand-based ventilation:
 
-| Component | Ratio | For 150 m³/hr System |
-|-----------|-------|----------------------|
-| Intake fan | 85-90% of exhaust | ~135 m³/hr |
-| Exhaust fan | 100% (reference) | 150 m³/hr |
-| Pressure differential | -10 to -15% | Air drawn in through gaps |
+| Component | Design Capacity | Baseline (12%) | Moderate (50%) | Peak (100%) |
+|-----------|----------------|----------------|----------------|-------------|
+| Intake fan | 150 m³/hr | ~18 m³/hr | ~75 m³/hr | 150 m³/hr |
+| Exhaust fan | 165 m³/hr | ~20 m³/hr | ~82 m³/hr | 165 m³/hr |
 
-**Practical setup:** Use same size fans, run exhaust 10-15% faster than intake.
+**EC Fan Speed Relationship:**
+
+| Exhaust Speed | Intake Speed | Notes |
+|---------------|--------------|-------|
+| 12% (minimum) | 10% | Baseline backflow prevention |
+| 50% | 45% | Moderate CO2 response |
+| 100% | 90% | Peak ventilation burst |
+
+The exhaust runs 10-15% faster at all speed levels, maintaining consistent negative pressure throughout the operating range.
+
+**Practical setup:** Use same size EC fans, set exhaust to run 10-15% faster via controller offset.
 
 ### Duct Sizing
 
-Air duct diameter based on maintaining 4-5 m/s airspeed.
+Air duct diameter based on maintaining 4-5 m/s airspeed at design capacity.
 
 #### Formula
 
@@ -373,27 +432,34 @@ Duct Area = Airflow (m³/s) ÷ Velocity (m/s)
 Diameter = √(4 × Area ÷ π)
 ```
 
-#### Calculation for 150 m³/hr
+#### Calculation Comparison
 
-```
-Airflow = 150 m³/hr = 0.042 m³/s
+| Flow Scenario | Airflow | 100mm Velocity | 150mm Velocity |
+|---------------|---------|----------------|----------------|
+| **Peak (burst)** | 150 m³/hr | 5.3 m/s | 2.4 m/s |
+| **Moderate** | 80 m³/hr | 2.8 m/s | 1.3 m/s |
+| **Baseline (12%)** | 30 m³/hr | 1.1 m/s | 0.5 m/s |
 
-At 4 m/s:
-  Area = 0.042 ÷ 4 = 0.0104 m²
-  Diameter = √(4 × 0.0104 ÷ π) = 115mm
+#### Duct Size Options
 
-At 5 m/s:
-  Area = 0.042 ÷ 5 = 0.0083 m²
-  Diameter = √(4 × 0.0083 ÷ π) = 103mm
-```
+| Size | Pros | Cons |
+|------|------|------|
+| **100mm** | Cheaper, easier to install | Noisier at peak, higher pressure drop |
+| **125mm** | Good compromise | Non-standard, harder to source fittings |
+| **150mm** | Quiet at all speeds, low pressure drop, future capacity | Larger, more expensive |
 
-**Mathematical result: 100-125mm would work**
+#### Recommendation: Keep 150mm Ducts
 
-#### Practical Recommendation
+With demand-based ventilation, fans run at low speed most of the time. **150mm ducts provide:**
+
+1. **Near-silent operation** - 0.5 m/s at baseline vs 1.1 m/s with 100mm
+2. **Lower fan energy** - Less pressure drop = EC fans work less hard
+3. **Peak capacity** - Still handles burst ventilation at comfortable 2.4 m/s
+4. **Noise matters** - You're living upstairs; quiet operation is worth the cost
 
 | Duct | Size | Type | Reasoning |
 |------|------|------|-----------|
-| **Intake** | 150mm | Insulated flex | Oversized for lower resistance, prevents condensation |
+| **Intake** | 150mm | Insulated flex | Prevents condensation, quiet operation |
 | **Exhaust** | 150mm | Standard flex | Same size, fan speed controls pressure |
 
 Using same duct size simplifies construction. Control pressure with fan speed, not duct size.
@@ -453,27 +519,36 @@ Exhaust duct doesn't need insulation - hot humid air won't condense going outsid
 
 ### Ventilation Control Options
 
-#### Option A: Variable Speed Fans (Recommended)
+#### Option A: Demand-Based EC Fans (Recommended)
 
-- Both fans same capacity (~200 m³/hr)
-- Intake runs at 70-80% speed
-- Exhaust runs at 80-90% speed
-- CO2 sensor triggers increased exhaust when >1000ppm
-- Most flexible, best control
+**This is the approach for this project.**
+
+- Both fans EC type with 0-10V speed control
+- Controller modulates speed based on CO2 levels
+- Baseline: 12% speed (backflow prevention only)
+- Ramps up proportionally as CO2 rises
+- 100% only during CO2 spikes
+
+| Benefit | Impact |
+|---------|--------|
+| Energy savings | 73-80% reduction vs continuous |
+| Noise reduction | Near-silent at baseline |
+| Precise control | Proportional response to actual need |
+| Longer fan life | Most hours at low speed |
 
 #### Option B: Fixed Speed with Dampers
 
 - Fixed speed fans
 - Damper on intake restricts flow
 - Exhaust runs unrestricted
-- Simpler but less responsive
+- Simpler but wastes energy, can't respond to CO2
 
 #### Option C: Passive Intake
 
 - No intake fan - just filtered opening
 - Exhaust fan creates negative pressure
 - Air pulled through passive intake
-- Simplest but least control over airflow rate
+- Can't pre-condition air, temperature swings
 
 ### Duct Resistance Adjustments
 
