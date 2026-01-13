@@ -753,65 +753,64 @@ Temperature Sensor (UI02) -> PID Controller -> AC Relay Output (UO06)
                             Heating < 19C
 ```
 
-#### Fog Pump External Enclosure
+#### Fog Pump Location (Inside Pre-Con Room)
 
-Weatherproof housing for the Mistify fog pump, mounted externally for noise isolation.
+The Mistify fog pump is located inside the pre-conditioning room, eliminating the need for an external weatherproof enclosure.
 
-| Specification | Requirement |
-|---------------|-------------|
-| IP rating | IP65 minimum (dust-tight, water jet resistant) |
-| Size | ~400 x 300 x 200mm |
-| Material | Polycarbonate or ABS (UV resistant) |
-| Ventilation | Required - pump generates 180W heat |
-| Mounting | Wall-mountable, shaded location |
+**Why inside the pre-con room?**
 
-**Enclosure Setup:**
+| Factor | Benefit |
+|--------|---------|
+| Weather protection | Already inside shed - no enclosure needed |
+| Heat (180W) | AC already cooling the room - handles it easily |
+| Noise (55dB) | Pump runs intermittently; walls provide isolation |
+| Plumbing | Shorter runs, all water treatment in one place |
+| Cost savings | ~$220 saved (no external enclosure) |
+
+**Pre-Con Room Layout with Fog System:**
+
 ```
-                    EXTERNAL WEATHERPROOF ENCLOSURE (IP65)
-                    +-----------------------------------+
-   Water in ------->|  [Mistify Pump]  [Power relay]   |
-   (from UV)        |       |              |           |
-                    |       |         240V from Omni   |
-                    |  [Vibration isolation mounts]    |
-                    |                                  |
-   HP line out ---->|  --------------------------->    |---> To nozzles
-                    |                                  |    (up to 15m run)
-                    |  [Ventilation fan + filter]      |
-                    +-----------------------------------+
-                              |
-                        Wall mounted
-                        (shaded location, away from rain)
+              1.4m
+  ┌─────────────────────────┐
+  │     ┌─────────┐         │
+  │     │   AC    │    ○────┼──── Supply duct to fruiting room
+  │     │  2.5kW  │         │
+  │     └─────────┘         │
+  │                         │  1.3m
+  │  ┌──────────┐           │
+  │  │ Fog Pump │ (wall-mounted, 180W)
+  │  └────┬─────┘           │
+  │       │ HP line ────────┼──── To nozzles in fruiting room
+  │  ┌────┴─────┐           │
+  │  │  100L    │           │
+  │  │  Tank    │           │
+  │  │ [Float]  │           │
+  │  └────┬─────┘           │
+  │  [5μm Filter]           │
+  │  [UV Sterilizer]        │
+  │       ↑                 │
+  └───────┼─────────────────┘
+          │
+    Mains water in
 ```
 
-**Components:**
+**Noise Considerations:**
 
-| Item | Purpose | Est. Cost |
-|------|---------|-----------|
-| IP65 enclosure 400x300x200mm | Weatherproof housing | ~$120 |
-| Ventilation fan + filter kit | Heat dissipation | ~$60 |
-| Vibration isolation mounts | Noise reduction | ~$40 |
-| **Total** | | **~$220** |
-
-**Noise Reduction Achieved:**
-
-| Factor | Reduction |
-|--------|-----------|
-| Enclosure walls | -5 to -10 dB |
-| Vibration mounts | -3 to -5 dB |
-| External location | Distance attenuation |
-| **Result** | ~45-50 dB at enclosure, inaudible upstairs |
+| Factor | Impact |
+|--------|--------|
+| Pump noise rating | 55 dB |
+| Operation | Intermittent (only when RH < 87%) |
+| Duty cycle | ~10-20% typical |
+| Wall isolation | -10 to -15 dB through pre-con walls |
+| Distance to upstairs | Further attenuation |
+| **Result** | Inaudible upstairs during normal operation |
 
 **Installation Notes:**
-- Mount in shaded location (Darwin heat)
-- Ensure ventilation openings face down (rain protection)
-- High-pressure line can run up to 15m to nozzles
-- Route power cable through IP68 cable gland
-- Provide drip loop on all cable entries
-
-**Australian Suppliers:**
-- [PV Connections](https://pvconnections.com.au/) - IP65 enclosures
-- [RS Components](https://au.rs-online.com/) - Enclosures and fans
-- [Jaycar](https://www.jaycar.com.au/) - Ventilation fans
+- Wall-mount pump above tank for gravity drain-back
+- Vibration pads under pump recommended (~$20)
+- HP line runs through wall to fruiting room nozzles
+- Keep pump accessible for maintenance
+- Connect power to Omni relay output (UO05)
 
 #### Fresh Air Intake Filtration
 
@@ -1125,14 +1124,15 @@ Optimized for stainless steel racks on castors.
 | Anti-vibration mounts (outdoor) | 1 | $50 | $50 |
 | **Subtotal** | | | **$1,950** |
 
-### Fog Pump Enclosure
+### Fog Pump Installation (in Pre-Con Room)
 
 | Item | Qty | Unit Price (AUD) | Total (AUD) |
 |------|-----|------------------|-------------|
-| IP65 enclosure 400x300x200mm | 1 | $120 | $120 |
-| Ventilation fan + filter kit | 1 | $60 | $60 |
-| Vibration isolation mounts | 1 | $40 | $40 |
-| **Subtotal** | | | **$220** |
+| Vibration isolation pads | 1 | $20 | $20 |
+| Wall mounting bracket | 1 | $30 | $30 |
+| **Subtotal** | | | **$50** |
+
+*Note: External enclosure eliminated - pump located inside pre-con room. Saves ~$170.*
 
 ### Backup Sensors & Spares
 
@@ -1157,11 +1157,11 @@ Optimized for stainless steel racks on castors.
 | Wiring & Accessories | $390 |
 | Infrastructure & Safety | $870 |
 | AC System | $1,950 |
-| Fog Pump Enclosure | $220 |
+| Fog Pump Installation | $50 |
 | Backup Sensors & Spares | $900 |
-| **TOTAL** | **$12,825** |
-| Contingency (15%) | $1,924 |
-| **GRAND TOTAL** | **$14,749** |
+| **TOTAL** | **$12,655** |
+| Contingency (15%) | $1,898 |
+| **GRAND TOTAL** | **$14,553** |
 
 ---
 
@@ -1226,7 +1226,7 @@ Optimized for stainless steel racks on castors.
 | Check sensor readings vs portable meter | Weekly |
 | Check fog nozzles for clogs | Weekly |
 | Check water tank level and float valve | Weekly |
-| Check fog pump enclosure ventilation | Weekly |
+| Check fog pump operation | Weekly |
 | Clean insect mesh on intake | Monthly |
 | Clean CO2 sensor | Monthly |
 | Check door switch operation | Monthly |

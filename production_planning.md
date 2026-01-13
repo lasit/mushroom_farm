@@ -307,22 +307,23 @@ The larger volume also provides:
 │  PRE-CONDITIONING ROOM (3.64 m³)    │
 │  1.3m × 1.4m × 2.0m                 │
 │                                     │
-│  ┌─────────┐                        │
-│  │   AC    │  MHI Avanti Plus       │
-│  │  2.5kW  │  Cools to 18-20°C      │
-│  └─────────┘                        │
-│                                     │
-│  [Supply EC Fan] ─── 12% baseline   │
-│         ↓            ramps on CO2   │
-└─────────┼───────────────────────────┘
-          ↓
-   [150mm Insulated Duct]
-          ↓
+│  ┌─────────┐    ┌──────────┐        │
+│  │   AC    │    │ Fog Pump │        │
+│  │  2.5kW  │    │ + Tank   │        │
+│  └─────────┘    │ + UV     │        │
+│                 └────┬─────┘        │
+│                      │ HP line      │
+│  [Supply EC Fan] ────┼── 12% base   │
+│         ↓            │   on CO2     │
+└─────────┼────────────┼──────────────┘
+          ↓            ↓
+   [150mm Duct]    [HP Fog Line]
+          ↓            ↓
 ┌─────────────────────────────────────┐
 │     FRUITING ROOM (18.12 m³)        │
 │     2.95m × 3.15m × 1.95m           │
 │                                     │
-│  Humidifier → 85-95% RH             │
+│  Fog nozzles → 85-95% RH            │
 │  CO2 sensor → Triggers fan ramp-up  │
 │  Circulation → Even distribution    │
 │                                     │
