@@ -80,10 +80,61 @@ The C20 meets current requirements with room to grow. The $2,000 saved can fund 
 
 ### Room Specifications
 
-| Room | Dimensions | Volume |
-|------|------------|--------|
-| **Fruiting Room** | 2.95m × 3.15m × 1.95m | 18.12 m³ |
-| **Pre-Conditioning Room** | 1.3m × 1.4m × 2.0m | 3.64 m³ |
+| Room | Dimensions | Volume | Insulation |
+|------|------------|--------|------------|
+| **Fruiting Room** | 2.95m × 3.15m × 1.95m | 18.12 m³ | 150mm |
+| **Pre-Conditioning Room** | 1.3m × 1.4m × 2.0m | 3.64 m³ | 75mm |
+
+**Room Layout:** Adjacent with shared wall (shortest duct runs, minimal heat transfer through shared wall).
+
+### Fan Placement Strategy
+
+Fans are positioned to keep them out of the high-humidity, spore-laden fruiting room environment.
+
+| Fan | Location | Action | Environment | Why |
+|-----|----------|--------|-------------|-----|
+| **Supply** | Inside pre-con room | Pushing | Cool, dry (20°C, 40% RH) | Long lifespan, easy access |
+| **Exhaust** | Outside fruiting room | Pulling | Ambient | Avoids 90% RH + spores |
+
+**Supply Fan (in pre-con room, pushing):**
+- Lives in cool, dry air from AC
+- Pushes conditioned air through 150mm insulated duct
+- Motor heat absorbed by AC (trivial load)
+- Easy maintenance access
+
+**Exhaust Fan (outside fruiting room, pulling):**
+- Mounted in exhaust duct after it exits fruiting room wall
+- Pulls humid, CO2-rich air out of fruiting room
+- Fan stays in ambient environment, not 90% RH
+- Spores pass through but don't accumulate on motor (exhaust direction)
+
+```
+┌─────────────────┐         ┌─────────────────────────────────┐
+│  PRE-CON ROOM   │         │         FRUITING ROOM           │
+│                 │ SHARED  │                                 │
+│  ┌───┐  ┌────┐  │  WALL   │                                 │
+│  │AC │  │Fog │  │         │    Fog nozzles (ceiling)        │
+│  └───┘  │Pump│  │         │                                 │
+│         └────┘  │         │    Racks + bags                 │
+│                 │         │                                 │
+│ ┌─────────────┐ │  150mm  │                              ┌──────────┐
+│ │ SUPPLY FAN  ├─┼─insul.──┼─► Air enters high            │ EXHAUST  │
+│ │   (push)    │ │  duct   │                              │   FAN    │
+│ └─────────────┘ │         │                          ───►│  (pull)  │──► Out
+│                 │         │   Air exits high (opposite)  └──────────┘
+│                 │         │                                 │
+└─────────────────┘         └─────────────────────────────────┘
+                                         │
+                                    150mm duct
+                                    (standard)
+```
+
+**Duct Lengths (adjacent rooms):**
+
+| Duct | Length | Type | Notes |
+|------|--------|------|-------|
+| Supply | 0.5-1m | 150mm insulated flex | Through shared wall |
+| Exhaust | 1-2m | 150mm standard | To external wall + fan |
 
 ### Demand-Based Ventilation
 

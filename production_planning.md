@@ -278,8 +278,16 @@ Pre-conditioning space is sized based on airflow. With demand-based ventilation,
 | Height | 2.0m |
 | Volume | 3.64 m³ |
 | Floor area | 1.82 m² |
+| Insulation | 75mm panels |
+| Layout | Adjacent to fruiting room (shared wall) |
 
 This size is optimal for demand-based ventilation - large enough for equipment access while providing good air dwell time at typical flow rates.
+
+**Equipment inside pre-con room:**
+- AC unit (wall-mounted)
+- Supply fan (pushing air to fruiting room)
+- Fog pump + 100L tank + UV sterilizer
+- G4/F7 intake filter
 
 The larger volume also provides:
 - Better temperature buffer during Darwin's extreme heat days
@@ -534,11 +542,30 @@ Exhaust duct doesn't need insulation - hot humid air won't condense going outsid
 
 ### Fan Placement
 
-| Fan | Position | Reasoning |
-|-----|----------|-----------|
-| Intake | High on wall | Cold air falls, distribute from top |
-| Exhaust | High on opposite wall | CO2 doesn't accumulate at floor level |
-| Distance | Max 8-10m apart | Beyond this, airflow drops significantly |
+**Key principle:** Keep fans OUT of the high-humidity, spore-laden fruiting room.
+
+| Fan | Location | Action | Environment |
+|-----|----------|--------|-------------|
+| **Supply** | Inside pre-con room | Pushing | Cool, dry (20°C, 40% RH) |
+| **Exhaust** | Outside fruiting room (in duct) | Pulling | Ambient |
+
+**Why this matters:**
+- Fruiting room is 85-95% RH with heavy spore load
+- Fans in this environment fail quickly (moisture in bearings, spores clog motor)
+- Placing fans outside the fruiting room extends lifespan significantly
+
+**Air entry/exit points (inside fruiting room):**
+
+| Point | Position | Reasoning |
+|-------|----------|-----------|
+| Supply inlet | High on wall | Cold air falls, distribute from top |
+| Exhaust outlet | High on opposite wall | CO2 doesn't accumulate at floor level |
+| Distance apart | 2.95-3.15m (room dimensions) | Cross-flow pattern |
+
+**Room arrangement:**
+- Pre-con and fruiting rooms share a wall (adjacent)
+- Supply duct: 0.5-1m through shared wall
+- Exhaust duct: 1-2m to external wall where fan is mounted
 
 ### Ventilation Control Options
 
