@@ -267,15 +267,19 @@ Pre-conditioning space is sized based on airflow. With demand-based ventilation,
 | **Demand-based typical** | 40-55 m³/hr | 2-3× per minute | 1.3-2.8 m³ |
 | **With equipment space** | - | AC + filter + clearance | +2 m³ |
 
-#### Revised Pre-Con Room Options
+#### Pre-Conditioning Room Specification
 
-| Size | Dimensions | Use Case |
-|------|------------|----------|
-| **Minimum** | 2-3 m³ (1.0×1.0×2.2m) | Tight closet, just fits AC and ducting |
-| **Comfortable** | 3-4 m³ (1.2×1.5×2.2m) | Access to AC, basic storage |
-| **With workspace** | 4-5 m³ (1.5×1.5×2.2m) | Service access, supply storage |
+**Actual dimensions: 1.3m × 1.4m × 2.0m = 3.64 m³**
 
-**Recommendation: 3-4 m³** is sufficient for demand-based ventilation.
+| Parameter | Value |
+|-----------|-------|
+| Width | 1.3m |
+| Depth | 1.4m |
+| Height | 2.0m |
+| Volume | 3.64 m³ |
+| Floor area | 1.82 m² |
+
+This size is optimal for demand-based ventilation - large enough for equipment access while providing good air dwell time at typical flow rates.
 
 The larger volume also provides:
 - Better temperature buffer during Darwin's extreme heat days
@@ -297,22 +301,40 @@ The larger volume also provides:
 ```
 [Outside Air 35°C]
        ↓
-[G3/F5 Pre-filter] ─── Removes dust, prevents spore backflow
+[G4/F7 Filter] ─── Removes dust, mold spores
        ↓
-[PRE-CONDITIONING ROOM]
-  ├── AC Unit (2.5-3.5kW inverter split)
-  ├── Cools air to 18-20°C
-  └── Dehumidifies (AC naturally removes moisture)
-       ↓
-[150mm Insulated Duct]
-       ↓
-[FRUITING ROOM 18.12 m³]
-  ├── Humidifier → Adds moisture to 85-95% RH
-  ├── Circulation fans → Even air distribution
-  ├── CO2 sensor → Triggers exhaust at >1000ppm
-  └── Exhaust fan → Removes CO2 and excess moisture
-       ↓
-[Exhaust to Outside]
+┌─────────────────────────────────────┐
+│  PRE-CONDITIONING ROOM (3.64 m³)    │
+│  1.3m × 1.4m × 2.0m                 │
+│                                     │
+│  ┌─────────┐                        │
+│  │   AC    │  MHI Avanti Plus       │
+│  │  2.5kW  │  Cools to 18-20°C      │
+│  └─────────┘                        │
+│                                     │
+│  [Supply EC Fan] ─── 12% baseline   │
+│         ↓            ramps on CO2   │
+└─────────┼───────────────────────────┘
+          ↓
+   [150mm Insulated Duct]
+          ↓
+┌─────────────────────────────────────┐
+│     FRUITING ROOM (18.12 m³)        │
+│     2.95m × 3.15m × 1.95m           │
+│                                     │
+│  Humidifier → 85-95% RH             │
+│  CO2 sensor → Triggers fan ramp-up  │
+│  Circulation → Even distribution    │
+│                                     │
+│  [Exhaust EC Fan] ─── 12% baseline  │
+│         ↓              +10% offset  │
+└─────────┼───────────────────────────┘
+          ↓
+   [150mm Standard Duct]
+          ↓
+   [Backdraft Damper]
+          ↓
+   [Exhaust to Outside]
 ```
 
 ### Fresh Air vs Recirculation

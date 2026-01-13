@@ -78,6 +78,31 @@ For a completely separate room (e.g., second fruiting room):
 The C20 meets current requirements with room to grow. The $2,000 saved can fund a U10 REM later if needed, providing better value than buying unused capacity upfront.
 
 
+### Room Specifications
+
+| Room | Dimensions | Volume |
+|------|------------|--------|
+| **Fruiting Room** | 2.95m × 3.15m × 1.95m | 18.12 m³ |
+| **Pre-Conditioning Room** | 1.3m × 1.4m × 2.0m | 3.64 m³ |
+
+### Demand-Based Ventilation
+
+**Key insight:** Fans don't run at full speed continuously. CO2-based demand ventilation operates as follows:
+
+| Operating Mode | Fan Speed | Airflow | Time % |
+|----------------|-----------|---------|--------|
+| **Baseline** | 12% | ~25-30 m³/hr | 60-70% |
+| **Moderate CO2** | 30-50% | ~50-80 m³/hr | 20-25% |
+| **High CO2 spike** | 70-100% | 100-150 m³/hr | 5-15% |
+
+**Weighted average airflow: ~40-55 m³/hr** (not 150 m³/hr continuously)
+
+This approach provides:
+- 73-80% energy savings vs continuous ventilation
+- Near-silent operation at baseline (fans barely audible)
+- Longer fan life (most hours at low speed)
+- ~$1,200/year savings in electricity
+
 ### Training Requirement
 
 Innotech requires 2-day training before purchase. This covers:
