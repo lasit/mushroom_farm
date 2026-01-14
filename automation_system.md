@@ -863,6 +863,67 @@ The Mistify fog pump is located inside the pre-conditioning room, eliminating th
 - Keep pump accessible for maintenance
 - Connect power to Omni relay output (UO05)
 
+#### Ducting Materials
+
+**Critical:** Galvanized steel corrodes within 2 years in high-humidity exhaust applications. Use corrosion-resistant materials.
+
+| Duct | Type | Material | Why |
+|------|------|----------|-----|
+| **Supply** | Insulated flexible (R0.6-R1.0) | Foil + glass wool insulation | Prevents condensation, easy routing |
+| **Exhaust** | Semi-rigid aluminium | 0.89mm aluminium | Corrosion resistant, smooth interior, cleanable |
+
+**Duct Type Comparison:**
+
+| Type | Airflow | Humidity Resistance | Cleanability | Price (150mm) |
+|------|---------|---------------------|--------------|---------------|
+| Semi-rigid aluminium | Good (smooth) | Excellent | Good | ~$48/3m |
+| Insulated flexible | Moderate | Good | Poor (ribbed) | ~$59-89/6m |
+| Galvanized spiral | Excellent | **Poor (corrodes)** | Excellent | ~$50-80/3m |
+| PVC rigid | Good | Excellent | Good | ~$30-50/3m |
+
+**Supply Duct - Insulated Flexible (R0.6 minimum):**
+
+| Specification | Value |
+|---------------|-------|
+| Diameter | 150mm internal |
+| Insulation | R0.6 to R1.0 |
+| Temperature range | -10°C to +80°C |
+| Length needed | 0.5-1m (through shared wall) |
+
+Why insulated: Cold air (18-20°C) passing through warmer environment causes condensation on uninsulated duct. R0.6 is sufficient for short runs.
+
+**Exhaust Duct - Semi-Rigid Aluminium:**
+
+| Specification | Value |
+|---------------|-------|
+| Diameter | 150mm |
+| Material thickness | 0.89mm aluminium |
+| Temperature range | -70°C to +220°C |
+| Standards | AS1668.1, AS1530.3 (4-Zero fire rated) |
+| Length needed | 1-2m (to external wall) |
+
+Why aluminium:
+- Won't corrode in 85-95% RH exhaust air
+- Smooth interior minimizes spore buildup
+- Easy to wipe clean during maintenance
+- Self-supporting with minimal sag
+
+**Australian Suppliers:**
+
+| Product | Supplier | Price | Notes |
+|---------|----------|-------|-------|
+| Insulated duct R0.6 (6m) | Pure Ventilation | $59 | Cut to length |
+| Insulated duct R1.0 (6m) | Universal Fans | $69 | Higher R-value |
+| Semi-rigid aluminium (3m) | Mitre 10 (Deflecto) | $48 | AS1668.1 compliant |
+| Semi-rigid aluminium (3m) | Bunnings | ~$45 | In-store |
+
+**Installation Notes:**
+- Pull insulated flex tight to minimize turbulence
+- Secure with metal clamps (not cable ties)
+- Seal joints with aluminium tape (not duct tape)
+- Slope exhaust duct slightly toward exit (drainage)
+- Support semi-rigid duct every 1m to prevent sag
+
 #### Fresh Air Intake Filtration
 
 Prevents contamination from outside air entering the pre-conditioning room.
@@ -1153,6 +1214,17 @@ Optimized for stainless steel racks on castors.
 | Cable glands, terminals | 1 lot | $100 | $100 |
 | **Subtotal** | | | **$390** |
 
+### Ducting
+
+| Item | Qty | Unit Price (AUD) | Total (AUD) |
+|------|-----|------------------|-------------|
+| Insulated flex duct R0.6 150mm (6m) | 1 | $59 | $59 |
+| Semi-rigid aluminium 150mm (3m) | 1 | $48 | $48 |
+| Metal clamps 150mm | 4 | $5 | $20 |
+| Aluminium tape | 1 | $15 | $15 |
+| Wall flanges/grilles | 2 | $20 | $40 |
+| **Subtotal** | | | **$182** |
+
 ### Infrastructure & Safety
 
 | Item | Qty | Unit Price (AUD) | Total (AUD) |
@@ -1206,13 +1278,14 @@ Optimized for stainless steel racks on castors.
 | Actuators (fans, dampers, lights) | $1,400 |
 | Humidification System | $2,225 |
 | Wiring & Accessories | $390 |
+| Ducting | $182 |
 | Infrastructure & Safety | $870 |
 | AC System | $1,950 |
 | Fog Pump Installation | $50 |
 | Backup Sensors & Spares | $900 |
-| **TOTAL** | **$12,655** |
-| Contingency (15%) | $1,898 |
-| **GRAND TOTAL** | **$14,553** |
+| **TOTAL** | **$12,837** |
+| Contingency (15%) | $1,926 |
+| **GRAND TOTAL** | **$14,763** |
 
 ---
 
@@ -1283,6 +1356,7 @@ Optimized for stainless steel racks on castors.
 | Check door switch operation | Monthly |
 | Backup controller configuration | Monthly |
 | Wipe walls/ceiling (spore management) | Monthly |
+| Inspect exhaust duct interior (spores) | Monthly |
 | Clean AC filters (indoor unit) | Monthly |
 | Replace G4 pre-filter | 3-6 months |
 | Check fan bearings/clean | 6 months |
