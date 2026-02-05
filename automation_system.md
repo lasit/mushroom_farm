@@ -192,10 +192,12 @@ Contact for training and purchase:
 | UO02 | AO | Supply fan speed | 0-10V | EC fan |
 | UO03 | AO | Fresh air damper position | 0-10V | Belimo actuator |
 | UO04 | AO | LED lights dimming | 0-10V | Dimmable driver |
-| UO05 | DO | Humidifier control | Relay 240V | Ultrasonic unit |
-| UO06 | DO | AC unit control | Relay 240V | Split system |
-| UO07 | DO | Lights on/off | Relay 240V | Main switch |
-| UO08 | DO | Alarm output | Relay 24V | Beacon/buzzer |
+| UO05 | DO | Humidifier control | 12VDC → RL12 relay → 240V | Mistify M-100 fog pump |
+| UO06 | DO | AC unit control | 12VDC → RL12 relay → 240V | Split system |
+| UO07 | DO | Lights on/off | 12VDC → RL12 relay → 240V | Main switch |
+| UO08 | DO | Alarm output | 12VDC → RL12 relay → 24V | Beacon/buzzer |
+
+**Note:** The Omni C20 digital outputs are 12VDC (max 45mA). They cannot switch 240V directly. Each DO output drives an [Innotech Omni RL12](https://innotech.com/Products/ProductDetails.aspx?prodid=420) relay module (15.4mA coil, 3A @ 230VAC switching capacity) mounted on DIN rail in the controller enclosure.
 | | | **Total Outputs: 8** | | |
 
 ### Point Utilization
@@ -665,7 +667,7 @@ High-pressure fog creates 5-15 micron droplets that evaporate before hitting sur
 - Install UV sterilizer inline before pump inlet
 - Use 5μm filter before UV (sediment blocks UV rays)
 - Anti-drip nozzles prevent dripping when pump stops
-- Connect pump power to Omni relay output (UO05)
+- Connect pump power to Omni C20 output UO05 via RL12 relay (12VDC output drives RL12 coil, RL12 switches 240V to pump)
 
 **Integration with Omni C20:**
 ```
@@ -1107,23 +1109,26 @@ Optimized for stainless steel racks on castors.
 └─────────────┘     │                                         │     └─────────────┘
                     │                                         │
 ┌─────────────┐     │                                         │     ┌─────────────┐
-│ Door Switch │────►│ UI06 (DI)         UO05 (Relay) │────►│ Humidifier  │
-│ NC Contact  │     │                                         │     │ 240V        │
-└─────────────┘     │                                         │     └─────────────┘
+│ Door Switch │────►│ UI06 (DI)         UO05 (12V) │──►[RL12]──►│ Humidifier  │
+│ NC Contact  │     │                                         │              │ 240V        │
+└─────────────┘     │                                         │              └─────────────┘
                     │                                         │
-┌─────────────┐     │                                         │     ┌─────────────┐
-│ Pre-con     │────►│ UI07 (DI)         UO06 (Relay) │────►│ AC Unit     │
-│ Door Switch │     │                                         │     │ 240V        │
-└─────────────┘     │                                         │     └─────────────┘
+┌─────────────┐     │                                         │
+│ Pre-con     │────►│ UI07 (DI)         UO06 (12V) │──►[RL12]──►│ AC Unit     │
+│ Door Switch │     │                                         │              │ 240V        │
+└─────────────┘     │                                         │              └─────────────┘
                     │                                         │
-┌─────────────┐     │                                         │     ┌─────────────┐
-│ Humidifier  │────►│ UI08 (DI)         UO07 (Relay) │────►│ Lights      │
-│ Low Water   │     │                                         │     │ 240V        │
-└─────────────┘     │                                         │     └─────────────┘
+┌─────────────┐     │                                         │
+│ Humidifier  │────►│ UI08 (DI)         UO07 (12V) │──►[RL12]──►│ Lights      │
+│ Low Water   │     │                                         │              │ 240V        │
+└─────────────┘     │                                         │              └─────────────┘
                     │                                         │
-                    │                   UO08 (Relay) │────►│ Alarm       │
-                    │                                         │     │ Beacon      │
-                    │                                         │     └─────────────┘
+                    │                   UO08 (12V) │──►[RL12]──►│ Alarm       │
+                    │                                         │              │ Beacon      │
+                    │                                         │              └─────────────┘
+                    │                                         │
+                    │  [RL12] = Innotech Omni RL12 relay      │
+                    │          (DIN rail, 3A @ 230VAC)         │
                     │                                         │
                     │  ETHERNET ◄────────────────────────────►│ PC/Monitoring
                     │                                         │
@@ -1210,9 +1215,9 @@ Optimized for stainless steel racks on castors.
 |------|-----|------------------|-------------|
 | Shielded cable (4-20mA) | 50m | $3/m | $150 |
 | Control cable (0-10V) | 30m | $2/m | $60 |
-| Relay module (240V, 4ch) | 1 | $80 | $80 |
+| Innotech Omni RL12 relay (DIN rail, 250VAC/3A) | 4 | $40 | $160 |
 | Cable glands, terminals | 1 lot | $100 | $100 |
-| **Subtotal** | | | **$390** |
+| **Subtotal** | | | **$470** |
 
 ### Ducting
 
@@ -1277,15 +1282,15 @@ Optimized for stainless steel racks on castors.
 | Sensors | $1,140 |
 | Actuators (fans, dampers, lights) | $1,400 |
 | Humidification System | $2,225 |
-| Wiring & Accessories | $390 |
+| Wiring & Accessories | $470 |
 | Ducting | $182 |
 | Infrastructure & Safety | $870 |
 | AC System | $1,950 |
 | Fog Pump Installation | $50 |
 | Backup Sensors & Spares | $900 |
-| **TOTAL** | **$12,837** |
-| Contingency (15%) | $1,926 |
-| **GRAND TOTAL** | **$14,763** |
+| **TOTAL** | **$12,917** |
+| Contingency (15%) | $1,938 |
+| **GRAND TOTAL** | **$14,855** |
 
 ---
 
