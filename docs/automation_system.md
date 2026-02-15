@@ -83,9 +83,9 @@ The C20 meets current requirements with room to grow. The $2,000 saved can fund 
 | Room | Dimensions | Volume | Insulation |
 |------|------------|--------|------------|
 | **Fruiting Room** | 2.95m × 3.15m × 1.95m | 18.12 m³ | 150mm |
-| **Pre-Conditioning Room** | 1.3m × 1.4m × 2.0m | 3.64 m³ | 75mm |
+| **Pre-Conditioning Room** | 1.0m × 1.0m × 2.0m | 2.0 m³ | 100mm |
 
-**Room Layout:** Adjacent with shared wall (shortest duct runs, minimal heat transfer through shared wall).
+**Room Layout:** Pre-con room sits between the exterior brick wall and the fruiting room (shared wall). The coolroom condensing unit (Kirby BA9) mounts outside the brick wall; the evaporator mounts inside the pre-con room on the brick wall. Supply duct passes through the shared wall to the fruiting room.
 
 ### Fan Placement Strategy
 
@@ -93,14 +93,14 @@ Fans are positioned to keep them out of the high-humidity, spore-laden fruiting 
 
 | Fan | Location | Action | Environment | Why |
 |-----|----------|--------|-------------|-----|
-| **Supply** | Inside pre-con room | Pushing | Cool, dry (20°C, 40% RH) | Long lifespan, easy access |
-| **Exhaust** | Outside fruiting room | Pulling | Ambient | Avoids 90% RH + spores |
+| **Supply** | In-duct (150mm supply duct, shared wall) | Pushing | Cool, dry (15°C) | Out of fruiting room, compact design |
+| **Exhaust** | Outside fruiting room (in exhaust duct) | Pulling | Ambient | Avoids 90% RH + spores |
 
-**Supply Fan (in pre-con room, pushing):**
-- Lives in cool, dry air from AC
-- Pushes conditioned air through 150mm insulated duct
-- Motor heat absorbed by AC (trivial load)
-- Easy maintenance access
+**Supply Fan (in-duct, pushing):**
+- 150mm in-duct EC fan sits in the supply duct between pre-con room and fruiting room
+- Lives in cool, dry air from coolroom evaporator
+- Pushes conditioned air through 150mm insulated duct into fruiting room
+- Moved to in-duct position because pre-con room is now a compact 2 m³ plenum
 
 **Exhaust Fan (outside fruiting room, pulling):**
 - Mounted in exhaust duct after it exits fruiting room wall
@@ -109,24 +109,20 @@ Fans are positioned to keep them out of the high-humidity, spore-laden fruiting 
 - Spores pass through but don't accumulate on motor (exhaust direction)
 
 ```
-┌─────────────────┐         ┌─────────────────────────────────┐
-│  PRE-CON ROOM   │         │         FRUITING ROOM           │
-│                 │ SHARED  │                                 │
-│  ┌───┐  ┌────┐  │  WALL   │                                 │
-│  │AC │  │Fog │  │         │    Fog nozzles (ceiling)        │
-│  └───┘  │Pump│  │         │                                 │
-│         └────┘  │         │    Racks + bags                 │
-│                 │         │                                 │
-│ ┌─────────────┐ │  150mm  │                              ┌──────────┐
-│ │ SUPPLY FAN  ├─┼─insul.──┼─► Air enters high            │ EXHAUST  │
-│ │   (push)    │ │  duct   │                              │   FAN    │
-│ └─────────────┘ │         │                          ───►│  (pull)  │──► Out
-│                 │         │   Air exits high (opposite)  └──────────┘
-│                 │         │                                 │
-└─────────────────┘         └─────────────────────────────────┘
-                                         │
-                                    150mm duct
-                                    (standard)
+[OUTSIDE]          [PRE-CON ROOM]              [FRUITING ROOM]
+                   1.0m × 1.0m × 2.0m
+                   ┌──────────────────┐        ┌──────────────────────────┐
+  Condensing       │                  │        │                          │
+  unit      ○──────┤  EVAPORATOR      │ 150mm  │  Fog nozzles (ceiling)   │
+  (Kirby BA9)copper│  (brick wall)    │ insul. │                          │
+             pipe  │  blows ═══►      ├─duct──►│  Racks + bags            │
+                   │                  │in-duct │                          │
+  Fresh air ═══►   │    ═══► ═══►     │EC fan  │                       ┌──────────┐
+  (G4/F7 filter)   │                  │(push)  │                       │ EXHAUST  │
+                   └──────────────────┘        │                  ───►│   FAN    │──► Out
+                                               │  Air exits high      │  (pull)  │
+                   BRICK WALL    SHARED WALL    │  (opposite wall)     └──────────┘
+                                               └──────────────────────────┘
 ```
 
 **Duct Lengths (adjacent rooms):**
@@ -182,7 +178,8 @@ Contact for training and purchase:
 | UI06 | DI | Door switch - fruiting room | Dry contact | NC |
 | UI07 | DI | Door switch - pre-con room | Dry contact | NC |
 | UI08 | DI | Humidifier low water alarm | Dry contact | NO |
-| | | **Total Inputs: 8** | | |
+| UI09 | DI | Coolroom alarm (high/low pressure, sensor fault) | Dry contact | NO |
+| | | **Total Inputs: 9** | | |
 
 ### Output Summary
 
@@ -193,19 +190,19 @@ Contact for training and purchase:
 | UO03 | AO | Fresh air damper position | 0-10V | Belimo actuator |
 | UO04 | AO | LED lights dimming | 0-10V | Dimmable driver |
 | UO05 | DO | Humidifier control | 12VDC → RL12 relay → 240V | Mistify M-100 fog pump |
-| UO06 | DO | AC unit control | 12VDC → RL12 relay → 240V | Split system |
+| UO06 | DO | Coolroom system enable/disable | 12VDC → RL12 relay → 240V | Coolroom controller power |
 | UO07 | DO | Lights on/off | 12VDC → RL12 relay → 240V | Main switch |
 | UO08 | DO | Alarm output | 12VDC → RL12 relay → 24V | Beacon/buzzer |
 
-**Note:** The Omni C20 digital outputs are 12VDC (max 45mA). They cannot switch 240V directly. Each DO output drives an [Innotech Omni RL12](https://innotech.com/Products/ProductDetails.aspx?prodid=420) relay module (15.4mA coil, 3A @ 230VAC switching capacity) mounted on DIN rail in the controller enclosure.
+**Note:** The Omni C20 digital outputs are 12VDC (max 45mA). They cannot switch 240V directly. Each DO output drives an [Innotech Omni RL12](https://innotech.com/Products/ProductDetails.aspx?prodid=420) relay module (15.4mA coil, 3A @ 230VAC switching capacity) mounted on DIN rail in the controller enclosure. UO06 switches the coolroom controller's 240V power feed — de-energising UO06 cuts power to the coolroom controller, cleanly shutting down the entire refrigeration system.
 | | | **Total Outputs: 8** | | |
 
 ### Point Utilization
 
 ```
-Used:     16 points (8 inputs + 8 outputs)
+Used:     17 points (9 inputs + 8 outputs)
 Available: 20 points
-Spare:     4 points (20% reserve for future)
+Spare:     3 points (15% reserve for future)
 ```
 
 ---
@@ -252,41 +249,78 @@ Supply fan always runs slower than exhaust to maintain negative pressure:
 
 ### 2. Temperature Control
 
-PID control loop for temperature.
+**Dual-controller architecture:** The coolroom's dedicated controller (Carel IR33 or Dixell XR06CX) manages the compressor directly with proper refrigeration safety logic. The Omni C20 supervises, monitors, and can enable/disable the coolroom system.
 
 ```
-SENSOR: Temperature (4-20mA) → PID Controller → AC Unit (Relay)
-                                     ↓
-                              Fresh Air Damper (0-10V)
+COOLROOM CONTROLLER (independent):
+  Own temp probe → Compressor on/off (with min on/off times, anti-short-cycle)
+                → Defrost cycles
+                → High/low pressure safety cutouts
+                → Evaporator fan delay
+
+OMNI C20 (supervisor):
+  SENSOR: Temperature UI04 (pre-con room) → MONITOR + ALARM
+  SENSOR: Temperature UI02 (fruiting room) → MONITOR + ALARM
+  OUTPUT: UO06 (relay) → Coolroom controller power (enable/disable)
+  INPUT:  UI09 → Coolroom alarm relay (fault detection)
 ```
 
-#### Setpoints
+**Why two controllers:** The Omni C20 is a building automation controller, not a refrigeration controller. It does not manage compressor minimum on/off times, defrost scheduling, or pressure safety — the coolroom controller handles all of this natively. This prevents compressor damage from improper cycling and provides an independent safety layer.
+
+#### Coolroom Controller Settings (set by refrigeration technician)
+
+| Parameter | Value |
+|-----------|-------|
+| Setpoint | 15°C |
+| Differential | 2°C (compressor ON at 17°C, OFF at 15°C) |
+| Minimum off time | 5 minutes |
+| Minimum on time | 3 minutes |
+| Defrost interval | 6-8 hours |
+| Defrost type | Electric or hot gas |
+| Fan delay after stop | 2-3 minutes |
+| High pressure cutout | Auto-reset |
+| Low pressure cutout | Manual-reset (requires investigation) |
+
+#### Omni C20 Monitoring Setpoints
 
 | Parameter | Oyster | Lion's Mane |
 |-----------|--------|-------------|
-| Target temp | 20°C | 18°C |
+| Target fruiting room temp | 20°C | 18°C |
+| Pre-con room target | 15°C | 15°C |
 | Deadband | ±1°C | ±1°C |
-| Cooling trigger | > 21°C | > 19°C |
-| Heating trigger | < 19°C | < 17°C |
-| Emergency high | > 26°C | > 24°C |
-| Emergency low | < 15°C | < 14°C |
+| Emergency high (fruiting) | > 26°C | > 24°C |
+| Emergency low (fruiting) | < 15°C | < 14°C |
+| Emergency low (pre-con) | < 10°C | < 10°C |
 
-#### Logic
+#### Omni C20 Logic
 
 ```
-IF Temp > Target + 1°C:
-  - AC cooling ON
-  - Fresh air damper OPEN (if outside cooler)
+DEFAULT STATE:
+  - UO06 = ENABLED (coolroom controller manages itself)
+  - Coolroom runs independently
 
-IF Temp < Target - 1°C:
-  - AC heating ON (if heat pump)
-  - Fresh air damper CLOSE
+IF pre-con temp (UI04) > 20°C for > 10 minutes:
+  - ALARM (coolroom not keeping up or has faulted)
+  - Check UI09 (coolroom alarm input)
 
-IF Temp > Emergency High:
+IF pre-con temp (UI04) < 10°C:
+  - DISABLE coolroom via UO06 (freeze protection)
   - ALARM
-  - Max ventilation
-  - AC max cooling
+
+IF fruiting room temp (UI02) > Emergency High:
+  - ALARM
+  - Max ventilation (fans to 100%)
+
+IF coolroom alarm (UI09) triggered:
+  - ALARM beacon ON (UO08)
+  - Log event
+
+IF pre-con door (UI07) OPEN > 5 minutes:
+  - DISABLE coolroom via UO06 (prevent compressor running with door open)
+  - ALARM
 ```
+
+**Key advantage:** If the Omni C20 crashes or loses power, the coolroom controller keeps running independently — refrigeration continues without building automation. This eliminates a single point of failure for temperature control.
 
 ### 3. Humidity Control
 
@@ -372,7 +406,7 @@ IF Door Switch OPEN:
   - Supply fan → 5% (NOT OFF - prevents backflow)
   - Humidifier → OFF
   - Lights → unchanged (for visibility)
-  - AC → unchanged (prevent temp spike)
+  - Coolroom → unchanged (prevent temp spike; disable if door open > 5 min)
   - Start 30-second timer
   - Backdraft dampers provide additional protection
 
@@ -417,9 +451,9 @@ FANS OFF (Problem):
 ```
 
 **Consequences of backflow:**
-- Condensation on AC evaporator coils
+- Condensation on coolroom evaporator coils
 - Spore buildup in pre-con room (oyster spores are aggressive)
-- AC efficiency drops
+- Coolroom efficiency drops
 - Mold risk in ductwork
 
 #### Solution: Continuous Operation + Backdraft Dampers
@@ -431,10 +465,11 @@ FANS OFF (Problem):
 
 ```
                    SUPPLY PATH
-[Pre-con Room] → [Backdraft Damper] → [Supply EC Fan] → [Fruiting Room]
-     AC unit        Spring-loaded        min 12%
-     creates        closes when          always on
-     cold dry air   fan stops
+[Pre-con Room] → [Backdraft Damper] → [In-duct EC Fan] → [Fruiting Room]
+     Coolroom       Spring-loaded        min 12%
+     evaporator     closes when          always on
+     creates        fan stops
+     cold dry air
 
                    EXHAUST PATH
 [Fruiting Room] → [Exhaust EC Fan] → [Backdraft Damper] → [Outside]
@@ -736,115 +771,147 @@ Humidity Sensor (UI03) → PID Controller → Relay Output (UO05) → Fog Pump P
 - Ensure airtight seal with foil tape or mastic
 - Position after fan (exhaust) or before fan (supply) for best effect
 
-#### Air Conditioning System
+#### Coolroom Refrigeration System
 
-Inverter split system for temperature control in the pre-conditioning room. Selected for quiet operation (critical for residential setting with living space upstairs).
+Dedicated coolroom split system for temperature control in the pre-conditioning room. The condensing unit mounts outside the brick wall; the evaporator mounts inside the pre-con room. A standalone coolroom controller (Carel/Dixell) manages the refrigeration cycle independently.
 
 | Specification | Requirement |
 |---------------|-------------|
-| Type | Inverter split system (variable speed) |
-| Capacity | 2.5 kW cooling/heating |
-| Indoor noise | <25 dB (quiet mode) |
-| Outdoor noise | <50 dB (critical for residential) |
-| Refrigerant | R32 (energy efficient) |
-| Control | On/off via Omni relay or WiFi |
-| Energy rating | 5-star minimum |
+| Type | Split coolroom system (condensing unit + evaporator) |
+| Capacity | 0.5-1.0 kW cooling at 15°C room / 35°C ambient |
+| Max ambient rating | 45°C minimum (critical for Darwin) |
+| Refrigerant | R134a |
+| Designed for | 24/7 continuous operation |
+| Control | Standalone coolroom controller + Omni enable/disable |
+| Compressor type | Hermetic reciprocating (fixed speed) |
 
-**Recommended System: Mitsubishi Heavy Industries Avanti Plus 2.5kW**
+**Recommended System: Kirby BA9MHYB1 Condensing Unit + Matched Evaporator**
 
 | Specification | Value |
 |---------------|-------|
-| Model | SRK25ZSXA-WF (WiFi) |
-| Indoor noise | 19 dB (quiet mode) |
-| Outdoor noise | 46-48 dB |
-| Energy rating | 5-star |
-| Warranty | 5 years parts & labour |
-| WiFi control | Yes (optional monitoring) |
-| Price (unit) | ~$1,200 AUD |
-| Installation | ~$600-800 AUD |
+| Model | Kirby BA9MHYB1 (condensing unit) |
+| Compressor | 1/4 HP hermetic reciprocating |
+| Refrigerant | R134a |
+| Max ambient | 45°C |
+| Cooling capacity | ~700-1,000W at 15°C room / 35°C ambient |
+| Power draw | 410W |
+| Current | 2.6A (standard 10A circuit) |
+| Outdoor noise | 38.5 dB LpA (quieter than a household fridge) |
+| Condensing unit dimensions | 330W × 470D × 276H mm |
+| Condensing unit weight | 18 kg |
+| Connections | 3/8" suction, 1/4" liquid |
+| Matched evaporator | Kirby KMA021 or KMT021 (selected by refrigeration tech) |
+| Coolroom controller | Carel IR33 or Dixell XR06CX (~$80-150 AUD) |
+| Price (condensing unit) | ~$940 AUD |
+| Price (evaporator) | ~$400-600 AUD |
+| Installation (by licensed tech) | ~$800-1,500 AUD |
+| **Total installed** | **~$2,400-3,400 AUD** |
 
-**Why Inverter Split System?**
-- Variable speed compressor - no loud on/off cycling
-- Quietest outdoor unit in class (46-48 dB vs 55-65 dB standard)
-- Better humidity control (runs longer at lower power)
-- 30-50% more energy efficient than on/off units
-- Stable temperature (no 2-3C swings)
+**Why Coolroom Refrigeration (Not Residential Split AC)?**
+- Designed for 24/7 continuous operation (residential ACs are not)
+- 15°C is trivially easy for a unit designed for 0-4°C
+- Low temperature differential (TD) evaporator strips less humidity from air
+- Built-in defrost cycles and compressor protection
+- 10-15+ year lifespan at this light duty cycle
+- Residential split ACs struggle below 16°C and risk evaporator icing
+- 38.5 dB outdoor noise is quieter than a residential split (46-48 dB)
 
-**Alternative Options (Australia):**
+**Why Kirby?**
+- Australian-made (Heatcraft Australia, part of Lennox International)
+- Every refrigeration tech in Australia knows Kirby
+- Parts stocked at Actrol Darwin (108 Reichardt Road, Winnellie)
+- 45°C ambient rated — designed for Australian tropics
+- Proven reliability — thousands running in Darwin right now
 
-| Model | Indoor (dB) | Outdoor (dB) | Price | Notes |
-|-------|-------------|--------------|-------|-------|
-| MHI Avanti Plus 2.5kW | 19 | 46-48 | ~$1,200 | Quietest outdoor |
-| MHI Avanti 2.5kW | 19 | 48-50 | ~$950 | Great value |
-| Daikin Lite 2.5kW | 19 | 48-50 | ~$1,000 | Reliable |
-| Fujitsu ASTG 2.5kW | 19 | 48-50 | ~$1,000 | Good value |
+**Alternative Option: Zanotti MSP121T Split System**
+
+| Specification | Value |
+|---------------|-------|
+| Type | Pre-packaged split coolroom system |
+| Compressor | L'Unite Hermetique, 5/8 HP |
+| Capacity | ~1,230W at 32°C ambient / +5°C room |
+| Max ambient | 45°C |
+| Pre-charged piping | 2.5m quick-connect (included) |
+| Price (installed) | ~$3,100-4,500 AUD |
+| Distributor | Bromic Refrigeration (Australia) |
+
+The Zanotti is a higher-quality pre-packaged system but less common in Darwin. Parts come from Bromic (Melbourne/Sydney), not local Actrol stock.
 
 **Noise Reference:**
-- 19 dB = rustling leaves (virtually silent)
-- 46-48 dB = quiet library / light rain
-- 50-55 dB = normal conversation
+- 38.5 dB = quiet whisper / rural background
+- 46-48 dB = quiet library / light rain (residential split AC)
+- 55-65 dB = normal conversation / standard coolroom unit
 
 **Installation Notes:**
-- Mount outdoor unit on wall bracket at ground level
-- Position away from upstairs bedroom windows
-- Use anti-vibration mounts on outdoor unit
-- Ensure adequate airflow clearance (300mm sides, 600mm front)
-- Condensate drain to floor drain
+- Condensing unit mounts outside the brick wall on anti-vibration pads
+- Evaporator mounts inside pre-con room on the brick wall (interior side)
+- Copper piping runs through the brick wall (~300-500mm, very short)
+- Core-drill brick wall for copper pipe penetrations (~15-20mm each)
+- Seal penetrations to prevent insect/humidity ingress
+- Condensate drain from evaporator to floor drain
+- Coolroom controller mounts inside pre-con room or in controller enclosure
+- Installation requires licensed refrigeration technician (ARCtick RHL for R134a)
 
-**Australian Suppliers:**
-- [Darwin Cooling](https://darwincooling.com.au/) - Local Darwin installer
-- [FastFlex](https://www.fastflex.com.au/) - MHI units wholesale
-- [Frozone Air](https://www.frozoneair.com.au/) - Supply and install
+**Darwin Refrigeration Technicians:**
+- [CTM Refrigeration](https://www.ctmdarwin.com.au/) - Coolroom specialists since 1980
+- [SJS Refrigeration](https://www.sjsrefrigeration.com) - 15 years commercial experience
+- [Pro Cool NT](https://www.procoolnt.com.au/) - Commercial refrigeration
+- [Baldwin Group NT](https://www.baldwingroupnt.com.au/) - Full refrigeration services
+
+**Parts Supply:**
+- [Actrol Darwin](https://www.actrol.com.au/) - 108 Reichardt Road, Winnellie NT — (08) 8935 2110
+- Stocks Kirby condensing units, evaporators, Carel/Dixell controllers, copper, R134a
 
 **Integration with Omni C20:**
 ```
-Temperature Sensor (UI02) -> PID Controller -> AC Relay Output (UO06)
-                                   |
-                            Setpoint: 18-20C
-                            Deadband: +/-1C
-                            Cooling > 21C
-                            Heating < 19C
+COOLROOM CONTROLLER (independent):
+  Own temp probe (pre-con room) → Compressor on/off
+                                → Defrost management
+                                → Safety cutouts (high/low pressure)
+  Setpoint: 15°C, Differential: 2°C
+
+OMNI C20 (supervisor):
+  UI04 (pre-con temp) → Monitor + Alarm
+  UI09 (coolroom alarm relay) → Fault detection → Alarm beacon (UO08)
+  UO06 (relay) → Coolroom controller power feed (enable/disable)
+
+  Default: UO06 ENABLED (coolroom runs independently)
+  Disable if: pre-con temp < 10°C, pre-con door open > 5 min, emergency
 ```
 
-#### Fog Pump Location (Inside Pre-Con Room)
+#### Fog Pump Location (Under House, Outside Pre-Con Room)
 
-The Mistify fog pump is located inside the pre-conditioning room, eliminating the need for an external weatherproof enclosure.
+The Mistify fog pump, 100L tank, and UV sterilizer are located outside the pre-conditioning room (under the house), due to the reduced pre-con room size (2.0 m³ pure air plenum). A high-pressure water line runs from the pump to fog nozzles in the fruiting room.
 
-**Why inside the pre-con room?**
+**Why outside the pre-con room?**
 
-| Factor | Benefit |
-|--------|---------|
-| Weather protection | Already inside shed - no enclosure needed |
-| Heat (180W) | AC already cooling the room - handles it easily |
-| Noise (55dB) | Pump runs intermittently; walls provide isolation |
-| Plumbing | Shorter runs, all water treatment in one place |
-| Cost savings | ~$220 saved (no external enclosure) |
+| Factor | Rationale |
+|--------|-----------|
+| Room size | 2.0 m³ pre-con room is a compact plenum — no space for tank + pump |
+| Pump heat (180W) | No longer adding heat load to pre-con room |
+| Maintenance access | Easier access to pump, tank, filters outside the sealed room |
+| Plumbing | Water line routes directly to fruiting room nozzles |
+| Protection | Under the house — sheltered from weather |
 
-**Pre-Con Room Layout with Fog System:**
+**Fog System Layout:**
 
 ```
-              1.4m
-  ┌─────────────────────────┐
-  │     ┌─────────┐         │
-  │     │   AC    │    ○────┼──── Supply duct to fruiting room
-  │     │  2.5kW  │         │
-  │     └─────────┘         │
-  │                         │  1.3m
-  │  ┌──────────┐           │
-  │  │ Fog Pump │ (wall-mounted, 180W)
-  │  └────┬─────┘           │
-  │       │ HP line ────────┼──── To nozzles in fruiting room
-  │  ┌────┴─────┐           │
-  │  │  100L    │           │
-  │  │  Tank    │           │
-  │  │ [Float]  │           │
-  │  └────┬─────┘           │
-  │  [5μm Filter]           │
-  │  [UV Sterilizer]        │
-  │       ↑                 │
-  └───────┼─────────────────┘
-          │
-    Mains water in
+  UNDER THE HOUSE (sheltered area)
+
+  Mains water in
+       │
+  [Isolation Valve]
+       │
+  [Float Valve] ──► [100L Tank]
+                          │
+                     [5μm Filter]
+                          │
+                     [UV Sterilizer]
+                          │
+                     [Fog Pump] (wall-mounted, 180W)
+                          │
+                     HP line ──────────────────► Through wall to fruiting room nozzles
+                                                 (4-6 anti-drip stainless nozzles)
 ```
 
 **Noise Considerations:**
@@ -854,16 +921,17 @@ The Mistify fog pump is located inside the pre-conditioning room, eliminating th
 | Pump noise rating | 55 dB |
 | Operation | Intermittent (only when RH < 87%) |
 | Duty cycle | ~10-20% typical |
-| Wall isolation | -10 to -15 dB through pre-con walls |
-| Distance to upstairs | Further attenuation |
+| Location | Under house, not in sealed room |
+| Distance to upstairs | Significant attenuation through floor structure |
 | **Result** | Inaudible upstairs during normal operation |
 
 **Installation Notes:**
 - Wall-mount pump above tank for gravity drain-back
 - Vibration pads under pump recommended (~$20)
 - HP line runs through wall to fruiting room nozzles
-- Keep pump accessible for maintenance
-- Connect power to Omni relay output (UO05)
+- Keep pump and tank accessible for maintenance
+- Connect pump power to Omni relay output (UO05) via RL12 relay
+- Run 240V power cable from controller enclosure to pump location
 
 #### Ducting Materials
 
@@ -892,7 +960,7 @@ The Mistify fog pump is located inside the pre-conditioning room, eliminating th
 | Temperature range | -10°C to +80°C |
 | Length needed | 0.5-1m (through shared wall) |
 
-Why insulated: Cold air (18-20°C) passing through warmer environment causes condensation on uninsulated duct. R0.6 is sufficient for short runs.
+Why insulated: Cold air (15°C) passing through warmer environment causes condensation on uninsulated duct. R0.6 is sufficient for short runs.
 
 **Exhaust Duct - Semi-Rigid Aluminium:**
 
@@ -995,7 +1063,7 @@ Backup controls if the Omni controller fails.
 |----------|------|----------|
 | Fan override | 3-position switch (OFF/AUTO/ON) | Force ventilation |
 | Fog override | 3-position switch (OFF/AUTO/ON) | Emergency humidity |
-| AC override | 3-position switch (OFF/AUTO/ON) | Prevent overheating |
+| Coolroom override | 3-position switch (OFF/AUTO/ON) | Prevent overheating |
 | Main isolator | Emergency stop (red mushroom) | Kill all systems |
 
 **Wiring Concept:**
@@ -1097,7 +1165,8 @@ Optimized for stainless steel racks on castors.
 ┌─────────────┐     │                                         │     ┌─────────────┐
 │ Temp/RH     │────►│ UI02 (4-20mA)     UO02 (0-10V) │────►│ Supply Fan  │
 │ Sensor      │────►│ UI03 (4-20mA)                           │     │ EC 0-10V    │
-└─────────────┘     │                                         │     └─────────────┘
+└─────────────┘     │                                         │     │ (in-duct)   │
+                    │                                         │     └─────────────┘
                     │                                         │
 ┌─────────────┐     │                                         │     ┌─────────────┐
 │ Pre-con     │────►│ UI04 (4-20mA)     UO03 (0-10V) │────►│ Damper      │
@@ -1108,24 +1177,25 @@ Optimized for stainless steel racks on castors.
 │ Duct Temp   │────►│ UI05 (4-20mA)     UO04 (0-10V) │────►│ LED Dimmer  │
 └─────────────┘     │                                         │     └─────────────┘
                     │                                         │
-┌─────────────┐     │                                         │     ┌─────────────┐
-│ Door Switch │────►│ UI06 (DI)         UO05 (12V) │──►[RL12]──►│ Humidifier  │
-│ NC Contact  │     │                                         │              │ 240V        │
-└─────────────┘     │                                         │              └─────────────┘
+┌─────────────┐     │                                         │     ┌─────────────────────┐
+│ Door Switch │────►│ UI06 (DI)         UO05 (12V) │──►[RL12]──►│ Fog Pump (240V)  │
+│ NC Contact  │     │                                         │     └─────────────────────┘
+└─────────────┘     │                                         │
+                    │                                         │     ┌─────────────────────┐
+┌─────────────┐     │                                         │     │ Coolroom Controller  │
+│ Pre-con     │────►│ UI07 (DI)         UO06 (12V) │──►[RL12]──►│ Power (240V)     │
+│ Door Switch │     │                                         │     │ (enable/disable)     │
+└─────────────┘     │                                         │     └─────────────────────┘
                     │                                         │
-┌─────────────┐     │                                         │
-│ Pre-con     │────►│ UI07 (DI)         UO06 (12V) │──►[RL12]──►│ AC Unit     │
-│ Door Switch │     │                                         │              │ 240V        │
-└─────────────┘     │                                         │              └─────────────┘
-                    │                                         │
-┌─────────────┐     │                                         │
-│ Humidifier  │────►│ UI08 (DI)         UO07 (12V) │──►[RL12]──►│ Lights      │
-│ Low Water   │     │                                         │              │ 240V        │
-└─────────────┘     │                                         │              └─────────────┘
-                    │                                         │
-                    │                   UO08 (12V) │──►[RL12]──►│ Alarm       │
-                    │                                         │              │ Beacon      │
-                    │                                         │              └─────────────┘
+┌─────────────┐     │                                         │     ┌─────────────────────┐
+│ Humidifier  │────►│ UI08 (DI)         UO07 (12V) │──►[RL12]──►│ Lights (240V)    │
+│ Low Water   │     │                                         │     └─────────────────────┘
+└─────────────┘     │                                         │
+                    │                                         │     ┌─────────────────────┐
+┌─────────────┐     │                                         │     │ Alarm Beacon         │
+│ Coolroom    │────►│ UI09 (DI)         UO08 (12V) │──►[RL12]──►│ (24V)            │
+│ Alarm Relay │     │                                         │     └─────────────────────┘
+└─────────────┘     │                                         │
                     │                                         │
                     │  [RL12] = Innotech Omni RL12 relay      │
                     │          (DIN rail, 3A @ 230VAC)         │
@@ -1134,6 +1204,17 @@ Optimized for stainless steel racks on castors.
                     │                                         │
                     │  POWER: 24VAC/DC                        │
                     └─────────────────────────────────────────┘
+
+COOLROOM CONTROLLER (Carel IR33 / Dixell XR06CX) — independent system:
+  ┌───────────────────────────────────────────────────┐
+  │  Power: 240V via Omni UO06 relay (enable/disable) │
+  │  Temp probe: NTC in pre-con room                   │
+  │  Output 1: Compressor contactor (240V)             │
+  │  Output 2: Evaporator fan                          │
+  │  Output 3: Defrost heater (if electric defrost)    │
+  │  Alarm relay: → Omni UI09 (fault notification)     │
+  │  Inputs: High pressure switch, Low pressure switch │
+  └───────────────────────────────────────────────────┘
 ```
 
 ### Power Distribution
@@ -1144,7 +1225,7 @@ Optimized for stainless steel racks on castors.
 │                                                                  │
 │  240V 10A ──► Exhaust Fan (EC)                                  │
 │  240V 10A ──► Supply Fan (EC)                                   │
-│  240V 10A ──► AC Unit                                           │
+│  240V 10A ──► Coolroom Controller → Compressor + Evap Fan        │
 │  240V 10A ──► Humidifier                                        │
 │  240V 10A ──► LED Lights                                        │
 │  240V 10A ──► 24V Power Supply (for controller & sensors)       │
@@ -1243,24 +1324,30 @@ Optimized for stainless steel racks on castors.
 | IP68 cable glands (pack) | 1 | $50 | $50 |
 | **Subtotal** | | | **$870** |
 
-### AC System
+### Coolroom Refrigeration System
 
 | Item | Qty | Unit Price (AUD) | Total (AUD) |
 |------|-----|------------------|-------------|
-| MHI Avanti Plus 2.5kW (WiFi) | 1 | $1,200 | $1,200 |
-| Installation (wall mount, <3m pipe) | 1 | $700 | $700 |
-| Anti-vibration mounts (outdoor) | 1 | $50 | $50 |
-| **Subtotal** | | | **$1,950** |
+| Kirby BA9MHYB1 condensing unit (1/4 HP, R134a) | 1 | $940 | $940 |
+| Kirby matched evaporator (KMA021 or KMT021) | 1 | $500 | $500 |
+| Coolroom controller (Carel IR33 or Dixell XR06CX) | 1 | $120 | $120 |
+| NTC temperature probe (for coolroom controller) | 1 | $30 | $30 |
+| Copper piping, fittings, refrigerant (R134a) | 1 lot | $250 | $250 |
+| Installation by licensed refrigeration tech | 1 | $1,200 | $1,200 |
+| Anti-vibration pads (condensing unit) | 1 | $40 | $40 |
+| **Subtotal** | | | **$3,080** |
 
-### Fog Pump Installation (in Pre-Con Room)
+### Fog Pump Installation (Under House)
 
 | Item | Qty | Unit Price (AUD) | Total (AUD) |
 |------|-----|------------------|-------------|
 | Vibration isolation pads | 1 | $20 | $20 |
 | Wall mounting bracket | 1 | $30 | $30 |
-| **Subtotal** | | | **$50** |
+| HP line extension (pump to fruiting room nozzles) | 1 lot | $80 | $80 |
+| 240V power run (controller enclosure to pump) | 1 | $50 | $50 |
+| **Subtotal** | | | **$180** |
 
-*Note: External enclosure eliminated - pump located inside pre-con room. Saves ~$170.*
+*Note: Fog pump relocated outside pre-con room due to compact 2 m³ plenum design. Water line runs from pump location under the house to fruiting room nozzles.*
 
 ### Backup Sensors & Spares
 
@@ -1285,12 +1372,12 @@ Optimized for stainless steel racks on castors.
 | Wiring & Accessories | $470 |
 | Ducting | $182 |
 | Infrastructure & Safety | $870 |
-| AC System | $1,950 |
-| Fog Pump Installation | $50 |
+| Coolroom Refrigeration System | $3,080 |
+| Fog Pump Installation | $180 |
 | Backup Sensors & Spares | $900 |
-| **TOTAL** | **$12,917** |
-| Contingency (15%) | $1,938 |
-| **GRAND TOTAL** | **$14,855** |
+| **TOTAL** | **$14,177** |
+| Contingency (15%) | $2,127 |
+| **GRAND TOTAL** | **$16,304** |
 
 ---
 
@@ -1362,10 +1449,10 @@ Optimized for stainless steel racks on castors.
 | Backup controller configuration | Monthly |
 | Wipe walls/ceiling (spore management) | Monthly |
 | Inspect exhaust duct interior (spores) | Monthly |
-| Clean AC filters (indoor unit) | Monthly |
+| Clean coolroom evaporator coils | Monthly |
 | Replace G4 pre-filter | 3-6 months |
 | Check fan bearings/clean | 6 months |
-| AC professional service | 6-12 months |
+| Coolroom professional service (condenser clean, refrigerant check) | 6-12 months |
 | Replace F7 fine filter | 6-12 months |
 | Replace UV lamp | 12 months |
 | Calibrate CO2 sensor | Annually |
@@ -1381,7 +1468,7 @@ Optimized for stainless steel racks on castors.
 | CO2 reading stuck at 0 | Sensor fault, wiring | Check 4-20mA loop, power |
 | Fans not responding | 0-10V cable, EC board | Check voltage at fan, wiring |
 | Humidity won't reach setpoint | Humidifier fault, airflow too high | Check water level, reduce exhaust |
-| Temperature swings | PID tuning, AC cycling | Adjust PID parameters |
+| Temperature swings | Coolroom controller differential too wide, defrost cycle | Adjust coolroom controller differential, check defrost settings |
 | Door interlock not working | Switch gap, wiring | Adjust magnet distance, check NC contact |
 
 ---

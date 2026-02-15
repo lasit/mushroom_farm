@@ -269,30 +269,38 @@ Pre-conditioning space is sized based on airflow. With demand-based ventilation,
 
 #### Pre-Conditioning Room Specification
 
-**Actual dimensions: 1.3m × 1.4m × 2.0m = 3.64 m³**
+**Actual dimensions: 1.0m × 1.0m × 2.0m = 2.0 m³**
 
 | Parameter | Value |
 |-----------|-------|
-| Width | 1.3m |
-| Depth | 1.4m |
+| Width | 1.0m |
+| Depth | 1.0m |
 | Height | 2.0m |
-| Volume | 3.64 m³ |
-| Floor area | 1.82 m² |
-| Insulation | 75mm panels |
-| Layout | Adjacent to fruiting room (shared wall) |
+| Volume | 2.0 m³ |
+| Floor area | 1.0 m² |
+| Insulation | 100mm panels (minimum) |
+| Layout | Adjacent to fruiting room (shared wall), exterior brick wall on opposite side |
+| Cooling | Kirby BA9 coolroom condensing unit (split system — evaporator inside, condenser outside) |
 
-This size is optimal for demand-based ventilation - large enough for equipment access while providing good air dwell time at typical flow rates.
+This room functions as a pure air conditioning plenum. The smaller volume is possible because the dedicated coolroom unit (low temperature differential evaporator) conditions air more effectively than a residential split AC, requiring less mixing volume.
 
 **Equipment inside pre-con room:**
-- AC unit (wall-mounted)
-- Supply fan (pushing air to fruiting room)
-- Fog pump + 100L tank + UV sterilizer
+- Coolroom evaporator (wall-mounted on brick wall side)
 - G4/F7 intake filter
+- Temperature probe (coolroom controller)
+- Temperature probe (Omni C20 monitoring)
 
-The larger volume also provides:
-- Better temperature buffer during Darwin's extreme heat days
-- More air dwell time = better conditioning at low flows
-- Quieter operation (lower air velocity)
+**Equipment relocated outside pre-con room:**
+- Coolroom condensing unit — mounted outside on brick wall (short copper pipe run through wall)
+- Fog pump + 100L tank + UV sterilizer — relocated under the house (water line runs to fruiting room nozzles)
+- Supply fan — now an in-duct EC fan in the 150mm supply duct (shared wall)
+
+**Why 2 m³ works with a coolroom unit:**
+- Low-TD evaporator (5.5°C vs 19°C for residential AC) requires less mixing volume
+- Air is conditioned effectively in a single pass across the evaporator
+- No bulky equipment inside the room — it's a pure air plenum
+- 100mm insulation reduces heat gain (critical for 15°C target with 30°C+ ambient)
+- At baseline ventilation (25-30 m³/hr), air dwell time is ~4 minutes — adequate for mixing
 
 #### Energy Savings from Demand-Based Ventilation
 
@@ -307,26 +315,30 @@ The larger volume also provides:
 #### System Layout
 
 ```
-[Outside Air 35°C]
+[Outside Air 30-35°C]
        ↓
 [G4/F7 Filter] ─── Removes dust, mold spores
        ↓
 ┌─────────────────────────────────────┐
-│  PRE-CONDITIONING ROOM (3.64 m³)    │
-│  1.3m × 1.4m × 2.0m                 │
+│  PRE-CONDITIONING ROOM (2.0 m³)     │
+│  1.0m × 1.0m × 2.0m                 │
 │                                     │
-│  ┌─────────┐    ┌──────────┐        │
-│  │   AC    │    │ Fog Pump │        │
-│  │  2.5kW  │    │ + Tank   │        │
-│  └─────────┘    │ + UV     │        │
-│                 └────┬─────┘        │
-│                      │ HP line      │
-│  [Supply EC Fan] ────┼── 12% base   │
-│         ↓            │   on CO2     │
-└─────────┼────────────┼──────────────┘
-          ↓            ↓
-   [150mm Duct]    [HP Fog Line]
-          ↓            ↓
+│  ┌──────────────┐                   │
+│  │  EVAPORATOR  │ ← Kirby BA9      │
+│  │  (brick wall)│   coolroom unit   │
+│  │  blows ═══►  │   (condenser     │
+│  └──────┬───────┘    outside wall)  │
+│         │ copper pipe through wall  │
+│         │                           │
+│    Cold air mixes ═══►              │
+│              ═══► ═══►              │
+│                       ↓             │
+│         [150mm insulated duct] ─────┼──► To fruiting room
+│         [In-duct EC supply fan]     │    (shared wall)
+└─────────────────────────────────────┘
+
+                         [HP Fog Line] ─── From fog pump (under house)
+                              ↓
 ┌─────────────────────────────────────┐
 │     FRUITING ROOM (18.12 m³)        │
 │     2.95m × 3.15m × 1.95m           │
@@ -346,6 +358,9 @@ The larger volume also provides:
    [Exhaust to Outside]
 ```
 
+**Airflow path through pre-con room:**
+The evaporator mounts on the brick wall (interior side), blowing cold air across the full width of the room. The supply duct is on the opposite wall (shared with fruiting room). This forces air to travel the full room width before exiting, ensuring proper mixing and preventing cold discharge air from entering the fruiting room unmixed.
+
 ### Fresh Air vs Recirculation
 
 Mixing fresh air with recirculated room air reduces cooling load.
@@ -363,11 +378,13 @@ Recirculated air is already at target temperature and humidity, reducing energy 
 
 | Component | Specification | Purpose |
 |-----------|---------------|---------|
-| AC unit | 2.5-3.5kW inverter split | Cool from 35°C → 18-20°C |
-| Pre-filter | G3 class | Remove dust from intake |
-| Supply fan | 180 m³/hr, variable speed | Deliver air to fruiting room |
+| Coolroom evaporator | Kirby matched evaporator (inside pre-con room, on brick wall) | Cool air from 30-35°C → 15°C |
+| Coolroom condensing unit | Kirby BA9MHYB1, 1/4 HP, R134a, 45°C ambient rated (outside brick wall) | Reject heat to outside |
+| Coolroom controller | Carel IR33 or Dixell XR06CX (manages compressor, defrost, safety) | Refrigeration management |
+| Pre-filter | G4 + F7 (3-stage with insect mesh) | Remove dust, mold spores from intake |
+| Supply fan | 150mm in-duct EC fan, 0-10V control | Deliver air to fruiting room |
 | Supply duct | 150mm insulated flex | Prevent condensation |
-| Damper | Manual or motorized | Control airflow rate |
+| Damper | Motorized (Belimo, 0-10V) | Control fresh air rate |
 
 #### Fruiting Room
 
@@ -378,20 +395,41 @@ Recirculated air is already at target temperature and humidity, reducing energy 
 | CO2 sensor | 0-5000ppm range | Trigger ventilation |
 | Circulation fans | Low velocity | Even air distribution |
 
-### AC Sizing for Darwin Climate
+### Coolroom Sizing for Darwin Climate
 
-Cooling load calculation:
+**Unit: Kirby BA9MHYB1 condensing unit + matched evaporator**
+
+| Specification | Value |
+|---------------|-------|
+| Compressor | 1/4 HP hermetic reciprocating |
+| Refrigerant | R134a |
+| Max ambient | 45°C (designed for Australian tropics) |
+| Cooling capacity | ~700-1,000W at 15°C room / 35°C ambient |
+| Power draw | 410W |
+| Current | 2.6A (standard 10A plug) |
+| Outdoor noise | 38.5 dB (quieter than a fridge) |
+| Condensing unit dimensions | 330W × 470D × 276H mm |
+
+Heat load calculation for 2 m³ pre-con room (100mm insulation):
 
 ```
-Cooling load = 1.08 × CFM × ΔT (°F)
-             = 1.08 × 105 CFM × 27°F (35°C to 20°C)
-             = ~3,000 BTU/hr
-
-With safety factor (1.5-2×):
-             = 5,000-6,000 BTU/hr (1.5-1.8kW)
+Transmission (walls/ceiling): ~50-80W
+Air infiltration:             ~30-50W
+Product load (warm bags):     ~100-200W (intermittent)
+Equipment (fan motors):       ~20-50W
+Total steady-state:           ~100-200W
+Peak load:                    ~400W
 ```
 
-**Recommendation: 2.5kW (8,500 BTU) minimum** for Darwin's extreme heat days.
+The Kirby BA9 delivers 700-1,000W at these conditions — comfortably oversized, meaning the compressor cycles lightly (20-40% duty cycle) and runs gently. This extends compressor life significantly.
+
+**Why a coolroom unit instead of a residential split AC:**
+- Designed for 24/7 continuous operation (residential ACs are not)
+- 15°C is trivially easy (designed for 0-4°C)
+- Low temperature differential (TD) evaporator strips less humidity from the air
+- Built-in defrost cycles and compressor protection
+- 10-15+ year lifespan at this light duty cycle
+- Residential split ACs struggle below 16°C and risk evaporator icing in Darwin's heat
 
 ### Spore Protection
 
@@ -401,10 +439,11 @@ With safety factor (1.5-2×):
 - Require respirators for personnel
 
 **Solutions:**
-- Keep AC unit in separate pre-conditioning room (not in fruiting room)
-- Install G3 filter before heat exchanger
+- Keep coolroom evaporator in separate pre-conditioning room (not in fruiting room)
+- Install G4/F7 filters on fresh air intake
 - Use positive pressure in pre-con room to prevent spore backflow
 - Clean/replace filters regularly
+- Condensing unit is outside the building — never exposed to spores
 
 ### Room Pressure: Negative for Fruiting
 
@@ -504,40 +543,27 @@ Exhaust duct doesn't need insulation - hot humid air won't condense going outsid
 ### Complete Ventilation Layout
 
 ```
-[PRE-CONDITIONING ROOM]
-  │
-  └── Intake fan (135 m³/hr)
-         │
-         ▼
-      150mm insulated duct
-         │
-         ▼
-┌────────────────────────────────────┐
-│     FRUITING ROOM (18.12 m³)       │
-│     Slight NEGATIVE pressure       │
-│                                    │
-│  ┌─────────────────────────────┐   │
-│  │ Cold dry air enters high    │   │
-│  │         ↓                   │   │
-│  │ Humidifier adds moisture    │   │
-│  │         ↓                   │   │
-│  │ Air flows across shelves    │   │
-│  │         ↓                   │   │
-│  │ CO2/moisture accumulates    │   │
-│  │         ↓                   │   │
-│  │ Exhaust removes stale air   │   │
-│  └─────────────────────────────┘   │
-│                                    │
-└────────────────────────────────────┘
-         │
-         ▼
-      150mm standard duct
-         │
-         ▼
-  Exhaust fan (150 m³/hr)
-         │
-         ▼
-[TO OUTSIDE - hot, humid, CO2-rich, spore-laden]
+[OUTSIDE]                [PRE-CON ROOM 2.0 m³]        [FRUITING ROOM 18.12 m³]
+
+  Condensing unit         ┌──────────────────┐        ┌──────────────────────────┐
+  (Kirby BA9)             │                  │        │                          │
+  outside brick    ○──────┤  EVAPORATOR      │        │  Cold dry air enters     │
+  wall             copper │  blows ═══►      │ 150mm  │  high on wall            │
+                   pipe   │                  │ insul. │         ↓                │
+  Fresh air ═══►          │    ═══► ═══►   ──┼─duct──►│  Fog nozzles add RH      │
+  (filtered)       G4/F7  │                  │ in-duct│         ↓                │
+                   filter │                  │  EC    │  Air flows across shelves │
+                          └──────────────────┘  fan   │         ↓                │
+                                                      │  CO2/moisture accumulates │
+                   BRICK WALL      SHARED WALL        │         ↓                │
+                                                      │  Exhaust removes stale   │
+                                                      └──────────┼───────────────┘
+                                                                 │
+                                                           150mm standard duct
+                                                                 │
+                                                           Exhaust EC fan (pulling)
+                                                                 │
+                                                     [TO OUTSIDE - spore-laden air]
 ```
 
 ### Fan Placement
@@ -546,13 +572,14 @@ Exhaust duct doesn't need insulation - hot humid air won't condense going outsid
 
 | Fan | Location | Action | Environment |
 |-----|----------|--------|-------------|
-| **Supply** | Inside pre-con room | Pushing | Cool, dry (20°C, 40% RH) |
-| **Exhaust** | Outside fruiting room (in duct) | Pulling | Ambient |
+| **Supply** | In-duct (150mm duct between pre-con and fruiting room) | Pushing | Cool, dry (15°C) |
+| **Exhaust** | Outside fruiting room (in exhaust duct) | Pulling | Ambient |
 
 **Why this matters:**
 - Fruiting room is 85-95% RH with heavy spore load
 - Fans in this environment fail quickly (moisture in bearings, spores clog motor)
 - Placing fans outside the fruiting room extends lifespan significantly
+- Supply fan moved to in-duct position because the pre-con room is now a compact 2 m³ plenum
 
 **Air entry/exit points (inside fruiting room):**
 
@@ -563,9 +590,11 @@ Exhaust duct doesn't need insulation - hot humid air won't condense going outsid
 | Distance apart | 2.95-3.15m (room dimensions) | Cross-flow pattern |
 
 **Room arrangement:**
-- Pre-con and fruiting rooms share a wall (adjacent)
-- Supply duct: 0.5-1m through shared wall
-- Exhaust duct: 1-2m to external wall where fan is mounted
+- Pre-con room sits between the exterior brick wall and the fruiting room
+- Evaporator on brick wall side, supply duct on shared wall side
+- Condensing unit outside the brick wall (short copper pipe run)
+- Supply duct: through shared wall (in-duct fan in this duct)
+- Exhaust duct: 1-2m to external wall where exhaust fan is mounted
 
 ### Ventilation Control Options
 
